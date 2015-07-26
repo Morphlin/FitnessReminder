@@ -23,7 +23,7 @@ namespace Fitness_Minder
         {
             if (TextBoxActivityName.Text != String.Empty)
             {
-                _SettingsForm.Activities.Add(TextBoxActivityName.Text, Convert.ToInt32(NumericReminderPre.Value*60),
+                _SettingsForm.AddLviActivity(TextBoxActivityName.Text, Convert.ToInt32(NumericReminderPre.Value*60),
                     Convert.ToInt32(NumericReminderDuration.Value), Convert.ToInt32(NumericReminderPost.Value*60));
                 Close();
             }
