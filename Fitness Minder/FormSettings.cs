@@ -2,7 +2,6 @@
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using Microsoft.Win32;
@@ -11,9 +10,27 @@ namespace Fitness_Minder
 {
     internal partial class FormSettings : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private bool InitialStart = true;
+        /// <summary>
+        /// 
+        /// </summary>
         private bool CanExit;
+        /// <summary>
+        /// 
+        /// </summary>
         private bool TimerEnabled;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private RegistrySettings RegSettings;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal int DefaultDelayPre
         {
             get { return (Convert.ToInt32(NumericReminderPre.Value)*60); }
@@ -28,7 +45,45 @@ namespace Fitness_Minder
         }
         private Activity.ActivityList Activities;
         private FormRemind RemindForm = new FormRemind();
-        private FileInfo SoundFile;
+        private System.Media.SoundPlayer MediaPlayer;
+
+        private const string AutoStartKey = "Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+        private bool AutoStartAtLogon
+        {
+            get
+            {
+                try
+                {
+                    var AutoStartRegistry = Registry.CurrentUser.OpenSubKey(AutoStartKey);
+                    var _AutoStartup = AutoStartRegistry.GetValue("Fitness Reminder");
+                    return (_AutoStartup != null);
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
+                }
+                return false;
+            }
+            set
+            {
+                try
+                {
+                    var AutoStartRegistry = Registry.CurrentUser.OpenSubKey(AutoStartKey, true);
+                    if (value)
+                    {
+                        AutoStartRegistry.SetValue("Fitness Reminder", Application.ExecutablePath, RegistryValueKind.String);
+                    }
+                    else
+                    {
+                        AutoStartRegistry.DeleteValue("Fitness Reminder", false);
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
+                }
+            }
+        }
 
         internal FormSettings()
         {
@@ -37,171 +92,53 @@ namespace Fitness_Minder
 
         private void FormSettings_Load(object sender, EventArgs e)
         {
-            try
+            RegSettings = new RegistrySettings();
+
+            switch (Convert.ToChar(RegSettings.GetCommandPanel()))
             {
-                RegistryKey RegSettings = Registry.CurrentUser.OpenSubKey("Software\\Gartech\\Fitness Reminder");
-                try
-                {
-                    var _CommandPanel = RegSettings.GetValue("CommandPanel");
-                    if (_CommandPanel != null)
-                    {
-                        switch (Convert.ToChar(_CommandPanel))
-                        {
-                            case 'T':
-                                ToolStripActivity.Parent = ToolStripContainerActivity.TopToolStripPanel;
-                                break;
-                            case 'B':
-                                ToolStripActivity.Parent = ToolStripContainerActivity.BottomToolStripPanel;
-                                break;
-                            case 'L':
-                                ToolStripActivity.Parent = ToolStripContainerActivity.LeftToolStripPanel;
-                                break;
-                            case 'R':
-                                ToolStripActivity.Parent = ToolStripContainerActivity.RightToolStripPanel;
-                                break;
-                        }
-                    }
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-
-                try
-                {
-                    var ActivitiesReg = RegSettings.GetValue("ActivityList");
-                    if (ActivitiesReg != null)
-                    {
-                        using (var ms = new MemoryStream((byte[]) ActivitiesReg))
-                        {
-                            var formatter = new BinaryFormatter();
-                            Activities = (Activity.ActivityList) formatter.Deserialize(ms);
-                        }
-                    }
-                    else
-                    {
-                        Activities = new Activity.ActivityList();
-                    }
-                    ListViewActivity.Items.AddRange(Activities.ToLviRange());
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-                
-                try
-                {
-                var _DefaultDelayPre = RegSettings.GetValue("DefaultDelayPre");
-                if (_DefaultDelayPre != null)
-                {
-                    NumericReminderPre.Value = Convert.ToInt32(_DefaultDelayPre);
-                }
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-                    
-                try
-                {
-                var _DefaultDuration = RegSettings.GetValue("DefaultDuration");
-                if (_DefaultDuration != null)
-                {
-                    NumericReminderDuration.Value = Convert.ToInt32(_DefaultDuration);
-                }
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-                    
-                try
-                {
-                var _DefaultDelayPost = RegSettings.GetValue("DefaultDelayPost");
-                if (_DefaultDelayPost != null)
-                {
-                    NumericReminderPost.Value = Convert.ToInt32(_DefaultDelayPost);
-                }
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-
-                try
-                {
-                var _DisplayType = RegSettings.GetValue("DisplayType");
-                if (_DisplayType != null)
-                {
-                    switch (Convert.ToInt32(_DisplayType))
-                    {
-                        case 1:
-                            RadioButtonBalloon.Checked = true;
-                            break;
-                        case 2:
-                            RadioButtonSplash.Checked = true;
-                            break;
-                    }
-                }
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-
-                try
-                {
-                var _DisplayFont = RegSettings.GetValue("DisplayFont");
-                if (_DisplayFont != null)
-                {
-                    using (var ms = new MemoryStream((byte[])_DisplayFont))
-                    {
-                        var formatter = new BinaryFormatter();
-                        LabelSplashExample.Font = (System.Drawing.Font)formatter.Deserialize(ms);
-                    }
-                }
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-                try
-                {
-                    var _DisplayBackColor = RegSettings.GetValue("DisplayBackColor");
-                    if (_DisplayBackColor != null)
-                    {
-                        using (var ms = new MemoryStream((byte[])_DisplayBackColor))
-                        {
-                            var formatter = new BinaryFormatter();
-                            LabelSplashExample.BackColor = (System.Drawing.Color)formatter.Deserialize(ms);
-                        }
-                    }
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-
-                //load PlaySound et PlaySoundFile from registry
-            }
-            catch (Exception Ex)
-            {
-                MessageBox.Show(Ex.Message);
+                case 'T':
+                    ToolStripActivity.Parent = ToolStripContainerActivity.TopToolStripPanel;
+                    break;
+                case 'B':
+                    ToolStripActivity.Parent = ToolStripContainerActivity.BottomToolStripPanel;
+                    break;
+                case 'L':
+                    ToolStripActivity.Parent = ToolStripContainerActivity.LeftToolStripPanel;
+                    break;
+                case 'R':
+                    ToolStripActivity.Parent = ToolStripContainerActivity.RightToolStripPanel;
+                    break;
             }
 
-            try
+            Activities = RegSettings.GetActivityList();
+            ListViewActivity.Items.AddRange(Activities.ToLviRange());
+
+            NumericReminderPre.Value = RegSettings.GetDefaultDelayPre();
+            NumericReminderDuration.Value = RegSettings.GetDefaultDuration();
+            NumericReminderPost.Value = RegSettings.GetDefaultDelayPost();
+
+            switch (RegSettings.GetDisplayType())
             {
-                RegistryKey RegSettings = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run");
-                var _AutoStartup = RegSettings.GetValue("Fitness Reminder");
-                if (_AutoStartup != null)
-                {
-                    CheckBoxWindowsStart.Checked = true;
-                }
+                case 1:
+                    RadioButtonSplash.Checked = true;
+                    break;
+                case 2:
+                    RadioButtonBalloon.Checked = true;
+                    break;
             }
-            catch (Exception Ex)
+
+            LabelSplashExample.Font = RegSettings.GetDisplayFont() ?? LabelSplashExample.Font;
+            LabelSplashExample.BackColor = RegSettings.GetDisplayBackColor();
+            CheckBoxSound.Checked = RegSettings.GetDisplaySound();
+
+            var SoundFile = RegSettings.GetDisplaySoundFile();
+            if (SoundFile != null)
             {
-                MessageBox.Show(Ex.Message);
+                LabelSound.Text = SoundFile.Name;
+                MediaPlayer = new System.Media.SoundPlayer(SoundFile.FullName);
             }
+
+            CheckBoxWindowsStart.Checked = AutoStartAtLogon;
         }
 
         private void FormSettings_FormClosing(object sender, FormClosingEventArgs e)
@@ -332,11 +269,34 @@ namespace Fitness_Minder
 
         private void ButtonBrowseSound_Click(object sender, EventArgs e)
         {
-            if (SoundFile != null) OpenFileDialogSound.FileName = SoundFile.FullName;
+            if (MediaPlayer != null) OpenFileDialogSound.FileName = MediaPlayer.SoundLocation;
             if (OpenFileDialogSound.ShowDialog() == DialogResult.OK)
             {
-                SoundFile = new FileInfo(OpenFileDialogSound.FileName);
-                LabelSound.Text = SoundFile.Name;
+                var SoundFile = new FileInfo(OpenFileDialogSound.FileName);
+                if (SoundFile.Exists)
+                {
+                    LabelSound.Text = SoundFile.Name;
+                    MediaPlayer = new System.Media.SoundPlayer(SoundFile.FullName);
+                }
+            }
+        }
+
+        private void ButtonResetSettings_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("App must close to take effect.", "Fitness Reminder", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                RegSettings.Close();
+                try
+                {
+                    //Initialises the registry or simply opens a handle.
+                    Registry.CurrentUser.DeleteSubKeyTree("Software\\Gartech\\Fitness Reminder");
+                    CanExit = true;
+                    Close();
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
+                }
             }
         }
 
@@ -347,70 +307,22 @@ namespace Fitness_Minder
                 Activities.Clear();
                 Activities.AddLviRange(ListViewActivity.Items);
 
-                try
-                {
-                    var RegSettings = Registry.CurrentUser.CreateSubKey("Software\\Gartech\\Fitness Reminder");
-                    if (ToolStripActivity.Parent == ToolStripContainerActivity.TopToolStripPanel)
-                    {
-                        RegSettings.SetValue("CommandPanel", 'T', RegistryValueKind.String);
-                    }
-                    if (ToolStripActivity.Parent == ToolStripContainerActivity.BottomToolStripPanel)
-                    {
-                        RegSettings.SetValue("CommandPanel", 'B', RegistryValueKind.String);
-                    }
-                    if (ToolStripActivity.Parent == ToolStripContainerActivity.LeftToolStripPanel)
-                    {
-                        RegSettings.SetValue("CommandPanel", 'L', RegistryValueKind.String);
-                    }
-                    if (ToolStripActivity.Parent == ToolStripContainerActivity.RightToolStripPanel)
-                    {
-                        RegSettings.SetValue("CommandPanel", 'R', RegistryValueKind.String);
-                    }
-                    using (var ms = new MemoryStream())
-                    {
-                        var formatter = new BinaryFormatter();
-                        formatter.Serialize(ms, Activities);
-                        RegSettings.SetValue("ActivityList", ms.ToArray(), RegistryValueKind.Binary);
-                    }
-                    RegSettings.SetValue("DefaultDelayPre", NumericReminderPre.Value, RegistryValueKind.DWord);
-                    RegSettings.SetValue("DefaultDuration", NumericReminderDuration.Value, RegistryValueKind.DWord);
-                    RegSettings.SetValue("DefaultDelayPost", NumericReminderPost.Value, RegistryValueKind.DWord);
-                    RegSettings.SetValue("DisplayType", (RadioButtonBalloon.Checked ? 1 : 2), RegistryValueKind.DWord);
-                    using (var ms = new MemoryStream())
-                    {
-                        var formatter = new BinaryFormatter();
-                        formatter.Serialize(ms, LabelSplashExample.Font);
-                        RegSettings.SetValue("DisplayFont", ms.ToArray(), RegistryValueKind.Binary);
-                    }
-                    using (var ms = new MemoryStream())
-                    {
-                        var formatter = new BinaryFormatter();
-                        formatter.Serialize(ms, LabelSplashExample.BackColor);
-                        RegSettings.SetValue("DisplayBackColor", ms.ToArray(), RegistryValueKind.Binary);
-                    }
+                RegSettings.SetCommandPanel(ToolStripActivity.Parent);
 
-                    //save PlaySound et PlaySoundFile to registry
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-                try
-                {
-                    var RegSettings2 = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                    if (CheckBoxWindowsStart.Checked)
-                    {
-                        RegSettings2.SetValue("Fitness Reminder", Application.ExecutablePath, RegistryValueKind.String);
-                    }
-                    else
-                    {
-                        RegSettings2.DeleteValue("Fitness Reminder", false);
-                    }
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
+                RegSettings.SetActivityList(Activities);
+
+                RegSettings.SetDefaultDelayPre(NumericReminderPre.Value);
+                RegSettings.SetDefaultDuration(NumericReminderDuration.Value);
+                RegSettings.SetDefaultDelayPost(NumericReminderPost.Value);
+
+                RegSettings.SetDisplayType((RadioButtonSplash.Checked ? 1 : 2));
+                RegSettings.SetDisplayFont(LabelSplashExample.Font);
+                RegSettings.SetDisplayBackColor(LabelSplashExample.BackColor);
+
+                RegSettings.SetDisplaySound(CheckBoxSound.Checked);
+                RegSettings.SetDisplaySoundFile(MediaPlayer);
+
+                AutoStartAtLogon = CheckBoxWindowsStart.Checked;
             }
             else
             {
@@ -482,6 +394,7 @@ namespace Fitness_Minder
                             if (RadioButtonSplash.Checked)
                             {
                                 RemindForm.ShowIt(Activities[CurrentActivity].Name, LabelSplashExample.Font, LabelSplashExample.BackColor);
+                                if (CheckBoxSound.Checked) MediaPlayer.Play();
                             }
                         }
                         break;
@@ -526,6 +439,9 @@ namespace Fitness_Minder
     /// </summary>
     internal class Activity
     {
+        /// <summary>
+        /// 
+        /// </summary>
         [Serializable]
         internal class ActivityList : IEnumerable<ActivityItem>
         {
@@ -545,7 +461,7 @@ namespace Fitness_Minder
             {
                 get
                 {
-                    return _Activities.Count();
+                    return _Activities.Count;
                 }
             }
             internal void Clear()
@@ -619,6 +535,481 @@ namespace Fitness_Minder
                 _DelayPre = DelayPre;
                 _Duration = Duration;
                 _DelayPost = DelayPost;
+            }
+        }
+    }
+
+    internal class RegistrySettings
+    {
+        /// <summary>
+        /// Registry key for settings.
+        /// </summary>
+        private RegistryKey RegistryAccess;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal RegistrySettings()
+        {
+            //Registry initialization.
+            try
+            {
+                //Initialises the registry or simply opens a handle.
+                RegistryAccess = Registry.CurrentUser.CreateSubKey("Software\\Gartech\\Fitness Reminder");
+            }
+            catch (Exception Ex)
+            {
+                //If access failed, prevent registry access and give user a warning.
+                RegistryAccess = null;
+                MessageBox.Show(Ex.Message);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        internal void Close()
+        {
+            RegistryAccess.Close();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string CommandPanelName = "CommandPanel";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal char GetCommandPanel()
+        {
+            try
+            {
+                var _CommandPanel = RegistryAccess.GetValue(CommandPanelName);
+                if (_CommandPanel != null)
+                {
+                    return (Convert.ToChar(_CommandPanel));
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            return 'B'; //Default Bottom Value
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal void SetCommandPanel(Control PanelParent)
+        {
+            try
+            {
+                RegistryAccess.SetValue(CommandPanelName, Convert.ToString(PanelParent.Tag), RegistryValueKind.String);
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string ActivityListName = "ActivityList";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal Activity.ActivityList GetActivityList()
+        {
+            try
+            {
+                var _ActivityList = RegistryAccess.GetValue(ActivityListName);
+                if (_ActivityList != null)
+                {
+                    using (var MemStream = new MemoryStream((byte[])_ActivityList))
+                    {
+                        var BinFormatter = new BinaryFormatter();
+                        return (Activity.ActivityList)BinFormatter.Deserialize(MemStream);
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            return new Activity.ActivityList(); //Default Value
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal void SetActivityList(Activity.ActivityList Activities)
+        {
+            try
+            {
+                using (var MemStream = new MemoryStream())
+                {
+                    var BinFormatter = new BinaryFormatter();
+                    BinFormatter.Serialize(MemStream, Activities);
+                    RegistryAccess.SetValue(ActivityListName, MemStream.ToArray(), RegistryValueKind.Binary);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string DefaultDelayPreName = "DefaultDelayPre";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal int GetDefaultDelayPre()
+        {
+            try
+            {
+                var _DefaultDelayPre = RegistryAccess.GetValue(DefaultDelayPreName);
+                if (_DefaultDelayPre != null)
+                {
+                    return Convert.ToInt32(_DefaultDelayPre);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            return 10; //Default Value
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal void SetDefaultDelayPre(decimal DefaultDelayPre)
+        {
+            try
+            {
+                RegistryAccess.SetValue(DefaultDelayPreName, Convert.ToInt32(DefaultDelayPre), RegistryValueKind.DWord);
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string DefaultDurationName = "DefaultDuration";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal int GetDefaultDuration()
+        {
+            try
+            {
+                var _DefaultDuration = RegistryAccess.GetValue(DefaultDurationName);
+                if (_DefaultDuration != null)
+                {
+                    return Convert.ToInt32(_DefaultDuration);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            return 30; //Default Value
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal void SetDefaultDuration(decimal DefaultDuration)
+        {
+            try
+            {
+                RegistryAccess.SetValue(DefaultDurationName, Convert.ToInt32(DefaultDuration), RegistryValueKind.DWord);
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string DefaultDelayPostName = "DefaultDelayPost";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal int GetDefaultDelayPost()
+        {
+            try
+            {
+                var _DefaultDelayPre = RegistryAccess.GetValue(DefaultDelayPostName);
+                if (_DefaultDelayPre != null)
+                {
+                    return Convert.ToInt32(_DefaultDelayPre);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            return 1; //Default Value
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal void SetDefaultDelayPost(decimal DefaultDelayPost)
+        {
+            try
+            {
+                RegistryAccess.SetValue(DefaultDelayPostName, Convert.ToInt32(DefaultDelayPost), RegistryValueKind.DWord);
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string DisplayTypeName = "DisplayType";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal int GetDisplayType()
+        {
+            try
+            {
+                var _DisplayType = RegistryAccess.GetValue(DisplayTypeName);
+                if (_DisplayType != null)
+                {
+                    return (Convert.ToInt32(_DisplayType));
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            return 1; //Default Bottom Value
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal void SetDisplayType(int DisplayType)
+        {
+            try
+            {
+                RegistryAccess.SetValue(DisplayTypeName, DisplayType, RegistryValueKind.DWord);
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string DisplayFontName = "DisplayFont";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal System.Drawing.Font GetDisplayFont()
+        {
+            try
+            {
+                var _DisplayFont = RegistryAccess.GetValue(DisplayFontName);
+                if (_DisplayFont != null)
+                {
+                    using (var ms = new MemoryStream((byte[])_DisplayFont))
+                    {
+                        var formatter = new BinaryFormatter();
+                        return (System.Drawing.Font)formatter.Deserialize(ms);
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            return null; //Default Value
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal void SetDisplayFont(System.Drawing.Font DisplayFont)
+        {
+            try
+            {
+                using (var MemStream = new MemoryStream())
+                {
+                    var BinFormatter = new BinaryFormatter();
+                    BinFormatter.Serialize(MemStream, DisplayFont);
+                    RegistryAccess.SetValue(DisplayFontName, MemStream.ToArray(), RegistryValueKind.Binary);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string DisplayBackColorName = "DisplayBackColor";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal System.Drawing.Color GetDisplayBackColor()
+        {
+            try
+            {
+                var _DisplayBackColor = RegistryAccess.GetValue(DisplayBackColorName);
+                if (_DisplayBackColor != null)
+                {
+                    using (var ms = new MemoryStream((byte[])_DisplayBackColor))
+                    {
+                        var formatter = new BinaryFormatter();
+                        return (System.Drawing.Color)formatter.Deserialize(ms);
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            return System.Drawing.Color.Orange; //Default Value
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal void SetDisplayBackColor(System.Drawing.Color DisplayBackColor)
+        {
+            try
+            {
+                using (var MemStream = new MemoryStream())
+                {
+                    var BinFormatter = new BinaryFormatter();
+                    BinFormatter.Serialize(MemStream, DisplayBackColor);
+                    RegistryAccess.SetValue(DisplayBackColorName, MemStream.ToArray(), RegistryValueKind.Binary);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string DisplaySoundName = "DisplaySound";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal bool GetDisplaySound()
+        {
+            try
+            {
+                var _DisplaySound = RegistryAccess.GetValue(DisplaySoundName);
+                if (_DisplaySound != null)
+                {
+                    return (Convert.ToInt32(_DisplaySound) == 1);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            return false; //Default Value
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal void SetDisplaySound(bool DisplaySound)
+        {
+            try
+            {
+                RegistryAccess.SetValue(DisplaySoundName, DisplaySound ? 1 : 0, RegistryValueKind.DWord);
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string DisplaySoundFileName = "DisplaySoundFile";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal FileInfo GetDisplaySoundFile()
+        {
+            try
+            {
+                var _DisplaySoundFile = RegistryAccess.GetValue(DisplaySoundFileName);
+                if (_DisplaySoundFile != null)
+                {
+                    if (_DisplaySoundFile != string.Empty)
+                    {
+                        var SoundFile = new FileInfo(_DisplaySoundFile.ToString());
+                        if (SoundFile.Exists) return SoundFile;
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            return null; //Default Value
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal void SetDisplaySoundFile(System.Media.SoundPlayer SoundPlayer)
+        {
+            try
+            {
+                RegistryAccess.SetValue(DisplaySoundFileName, SoundPlayer != null ? (new FileInfo(SoundPlayer.SoundLocation).Exists ? SoundPlayer.SoundLocation : String.Empty) : String.Empty, RegistryValueKind.String);
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
             }
         }
     }
