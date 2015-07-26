@@ -170,20 +170,19 @@ namespace Fitness_Minder
             ShowIt();
         }
 
-        internal void AddLviActivity(string Name, int DelayPre, int Duration, int DelayPost)
-        {
-            var EntryLVI = new ListViewItem(Name);
-            EntryLVI.ImageIndex = 0;
-            EntryLVI.SubItems.Add(DelayPre.ToString());
-            EntryLVI.SubItems.Add(Duration.ToString());
-            EntryLVI.SubItems.Add(DelayPost.ToString());
-            ListViewActivity.Items.Add(EntryLVI);
-        }
-
         private void ToolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var ItemForm = new FormItem(this);
-            ItemForm.ShowDialog();
+            var ItemForm = new FormItem();
+            ItemForm.ShowIt(ListViewActivity, DefaultDelayPre, DefaultDuration, DefaultDelayPost);
+        }
+
+        private void ToolStripButtonEdit_Click(object sender, EventArgs e)
+        {
+            if (ListViewActivity.SelectedItems.Count > 0)
+            {
+                var ItemForm = new FormItem();
+                ItemForm.ShowIt(ListViewActivity.SelectedItems[0]);
+            }
         }
 
         private void ToolStripButtonUp_Click(object sender, EventArgs e)
@@ -198,11 +197,6 @@ namespace Fitness_Minder
                     ListViewActivity.Items.Insert(currentIndex - 1, item);
                 }
             }
-        }
-
-        private void ToolStripButtonEdit_Click(object sender, EventArgs e)
-        {
-            //add edit
         }
 
         private void ToolStripButtonDown_Click(object sender, EventArgs e)
@@ -229,6 +223,7 @@ namespace Fitness_Minder
 
         private void ListViewActivity_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ToolStripButtonEdit.Enabled = (ListViewActivity.SelectedItems.Count > 0);
             ToolStripButtonUp.Enabled = (ListViewActivity.SelectedItems.Count > 0);
             ToolStripButtonDown.Enabled = (ListViewActivity.SelectedItems.Count > 0);
             ToolStripButtonDelete.Enabled = (ListViewActivity.SelectedItems.Count > 0);
@@ -505,7 +500,6 @@ namespace Fitness_Minder
                 {
                     var EntryLVI = new ListViewItem(Act.Name);
                     EntryLVI.Checked = Act.Enable;
-                    EntryLVI.ImageIndex = 0;
                     EntryLVI.SubItems.Add(Act.DelayPre.ToString());
                     EntryLVI.SubItems.Add(Act.Duration.ToString());
                     EntryLVI.SubItems.Add(Act.DelayPost.ToString());
@@ -1009,7 +1003,7 @@ namespace Fitness_Minder
                 var _DisplaySoundFile = RegistryAccess.GetValue(DisplaySoundFileName);
                 if (_DisplaySoundFile != null)
                 {
-                    if (_DisplaySoundFile != string.Empty)
+                    if (_DisplaySoundFile.ToString() != string.Empty)
                     {
                         var SoundFile = new FileInfo(_DisplaySoundFile.ToString());
                         if (SoundFile.Exists) return SoundFile;

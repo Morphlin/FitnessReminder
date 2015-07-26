@@ -277,7 +277,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Fitness Reminder";
-            this.Load += new System.EventHandler(this.FormItem_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxActivity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericReminderPre)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericReminderDuration)).EndInit();
