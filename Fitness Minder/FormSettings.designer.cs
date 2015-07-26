@@ -50,9 +50,12 @@
             this.LabelReminder = new System.Windows.Forms.Label();
             this.PictureBoxReminder = new System.Windows.Forms.PictureBox();
             this.GroupBoxDisplay = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.RadioButtonSplash = new System.Windows.Forms.RadioButton();
+            this.RadioButtonBalloon = new System.Windows.Forms.RadioButton();
             this.GroupBoxSplash = new System.Windows.Forms.GroupBox();
+            this.ButtonSplashBackColor = new System.Windows.Forms.Button();
+            this.ButtonSplashFont = new System.Windows.Forms.Button();
+            this.LabelSplashExample = new System.Windows.Forms.Label();
             this.TabPageDefaults = new System.Windows.Forms.TabPage();
             this.GroupBoxDefaults = new System.Windows.Forms.GroupBox();
             this.NumericReminderPost = new System.Windows.Forms.NumericUpDown();
@@ -76,9 +79,6 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImageListActivity = new System.Windows.Forms.ImageList(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.FontDialogSplash = new System.Windows.Forms.FontDialog();
             this.ColorDialogSplash = new System.Windows.Forms.ColorDialog();
             this.TabControlSettings.SuspendLayout();
@@ -299,7 +299,8 @@
             this.LabelReminder.Name = "LabelReminder";
             this.LabelReminder.Size = new System.Drawing.Size(229, 48);
             this.LabelReminder.TabIndex = 17;
-            this.LabelReminder.Text = "label6";
+            this.LabelReminder.Text = "The reminder can be displayed in a balloon tip or as a Splash screen. Select the " +
+    "Splash option to tweak the font and the background.";
             this.LabelReminder.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBoxReminder
@@ -313,8 +314,8 @@
             // 
             // GroupBoxDisplay
             // 
-            this.GroupBoxDisplay.Controls.Add(this.radioButton2);
-            this.GroupBoxDisplay.Controls.Add(this.radioButton1);
+            this.GroupBoxDisplay.Controls.Add(this.RadioButtonSplash);
+            this.GroupBoxDisplay.Controls.Add(this.RadioButtonBalloon);
             this.GroupBoxDisplay.Location = new System.Drawing.Point(11, 69);
             this.GroupBoxDisplay.Name = "GroupBoxDisplay";
             this.GroupBoxDisplay.Size = new System.Drawing.Size(283, 84);
@@ -322,31 +323,33 @@
             this.GroupBoxDisplay.TabStop = false;
             this.GroupBoxDisplay.Text = "Reminder Type";
             // 
-            // radioButton2
+            // RadioButtonSplash
             // 
-            this.radioButton2.Location = new System.Drawing.Point(21, 51);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(234, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Full Screen Splash";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.RadioButtonSplash.Location = new System.Drawing.Point(21, 51);
+            this.RadioButtonSplash.Name = "RadioButtonSplash";
+            this.RadioButtonSplash.Size = new System.Drawing.Size(234, 17);
+            this.RadioButtonSplash.TabIndex = 1;
+            this.RadioButtonSplash.Text = "Full Screen Splash";
+            this.RadioButtonSplash.UseVisualStyleBackColor = true;
+            this.RadioButtonSplash.CheckedChanged += new System.EventHandler(this.RadioButtonSplash_CheckedChanged);
             // 
-            // radioButton1
+            // RadioButtonBalloon
             // 
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(21, 27);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(234, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Balloon Tip (Notification from Tray Icon)";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.RadioButtonBalloon.Checked = true;
+            this.RadioButtonBalloon.Location = new System.Drawing.Point(21, 27);
+            this.RadioButtonBalloon.Name = "RadioButtonBalloon";
+            this.RadioButtonBalloon.Size = new System.Drawing.Size(234, 17);
+            this.RadioButtonBalloon.TabIndex = 0;
+            this.RadioButtonBalloon.TabStop = true;
+            this.RadioButtonBalloon.Text = "Balloon Tip (Notification from Tray Icon)";
+            this.RadioButtonBalloon.UseVisualStyleBackColor = true;
+            this.RadioButtonBalloon.CheckedChanged += new System.EventHandler(this.RadioButtonBalloon_CheckedChanged);
             // 
             // GroupBoxSplash
             // 
-            this.GroupBoxSplash.Controls.Add(this.button2);
-            this.GroupBoxSplash.Controls.Add(this.button1);
-            this.GroupBoxSplash.Controls.Add(this.label1);
+            this.GroupBoxSplash.Controls.Add(this.ButtonSplashBackColor);
+            this.GroupBoxSplash.Controls.Add(this.ButtonSplashFont);
+            this.GroupBoxSplash.Controls.Add(this.LabelSplashExample);
             this.GroupBoxSplash.Location = new System.Drawing.Point(11, 161);
             this.GroupBoxSplash.Name = "GroupBoxSplash";
             this.GroupBoxSplash.Size = new System.Drawing.Size(283, 99);
@@ -354,6 +357,38 @@
             this.GroupBoxSplash.TabStop = false;
             this.GroupBoxSplash.Text = "Full Screen Splash Options";
             this.GroupBoxSplash.Visible = false;
+            // 
+            // ButtonSplashBackColor
+            // 
+            this.ButtonSplashBackColor.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.ButtonSplashBackColor.Location = new System.Drawing.Point(171, 60);
+            this.ButtonSplashBackColor.Name = "ButtonSplashBackColor";
+            this.ButtonSplashBackColor.Size = new System.Drawing.Size(90, 23);
+            this.ButtonSplashBackColor.TabIndex = 10;
+            this.ButtonSplashBackColor.Text = "&Back color";
+            this.ButtonSplashBackColor.UseVisualStyleBackColor = true;
+            this.ButtonSplashBackColor.Click += new System.EventHandler(this.ButtonSplashBackColor_Click);
+            // 
+            // ButtonSplashFont
+            // 
+            this.ButtonSplashFont.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.ButtonSplashFont.Location = new System.Drawing.Point(171, 31);
+            this.ButtonSplashFont.Name = "ButtonSplashFont";
+            this.ButtonSplashFont.Size = new System.Drawing.Size(90, 23);
+            this.ButtonSplashFont.TabIndex = 9;
+            this.ButtonSplashFont.Text = "&Font";
+            this.ButtonSplashFont.UseVisualStyleBackColor = true;
+            this.ButtonSplashFont.Click += new System.EventHandler(this.ButtonSplashFont_Click);
+            // 
+            // LabelSplashExample
+            // 
+            this.LabelSplashExample.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LabelSplashExample.Location = new System.Drawing.Point(21, 31);
+            this.LabelSplashExample.Name = "LabelSplashExample";
+            this.LabelSplashExample.Size = new System.Drawing.Size(132, 52);
+            this.LabelSplashExample.TabIndex = 0;
+            this.LabelSplashExample.Text = "Example";
+            this.LabelSplashExample.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TabPageDefaults
             // 
@@ -611,35 +646,9 @@
             this.ImageListActivity.TransparentColor = System.Drawing.Color.Transparent;
             this.ImageListActivity.Images.SetKeyName(0, "Disaster.png");
             // 
-            // label1
+            // FontDialogSplash
             // 
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Location = new System.Drawing.Point(21, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 52);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Example";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button1
-            // 
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(171, 31);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "&Font";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(171, 60);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(90, 23);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "&Back color";
-            this.button2.UseVisualStyleBackColor = true;
+            this.FontDialogSplash.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
             // FormSettings
             // 
@@ -710,8 +719,8 @@
         private System.Windows.Forms.ToolStripButton ToolStripButtonDelete;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.GroupBox GroupBoxDisplay;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton RadioButtonSplash;
+        private System.Windows.Forms.RadioButton RadioButtonBalloon;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ImageList ImageListActivity;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -733,9 +742,9 @@
         private System.Windows.Forms.Label LabelReminderIntervalMinutes;
         private System.Windows.Forms.Label LabelDefaults;
         private System.Windows.Forms.PictureBox PictureBoxDefaults;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button ButtonSplashBackColor;
+        private System.Windows.Forms.Button ButtonSplashFont;
+        private System.Windows.Forms.Label LabelSplashExample;
         private System.Windows.Forms.FontDialog FontDialogSplash;
         private System.Windows.Forms.ColorDialog ColorDialogSplash;
     }

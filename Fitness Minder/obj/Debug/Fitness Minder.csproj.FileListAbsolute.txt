@@ -11,3 +11,14 @@ D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\Fitness Reminder
 D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\Fitness Reminder\Fitness Minder\bin\Debug\Fitness Minder.exe
 D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\Fitness Reminder\Fitness Minder\bin\Debug\Fitness Minder.pdb
 D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\Fitness Reminder\Fitness Minder\obj\Debug\Fitness_Minder.FormItem.resources
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\bin\Debug\Fitness Minder.exe.config
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\obj\Debug\Fitness Minder.exe
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\obj\Debug\Fitness Minder.pdb
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\bin\Debug\Fitness Minder.exe
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\bin\Debug\Fitness Minder.pdb
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\obj\Debug\Fitness Minder.csprojResolveAssemblyReference.cache
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\obj\Debug\Fitness_Minder.FormItem.resources
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\obj\Debug\Fitness_Minder.FormRemind.resources
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\obj\Debug\Fitness_Minder.FormSettings.resources
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\obj\Debug\Fitness_Minder.Properties.Resources.resources
+D:\Alex\Projets\Programmation\Microsoft C# .NET\Développements\FitnessReminder\Fitness Minder\obj\Debug\Fitness Minder.csproj.GenerateResource.Cache

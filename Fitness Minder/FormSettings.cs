@@ -39,72 +39,151 @@ namespace Fitness_Minder
             try
             {
                 RegistryKey RegSettings = Registry.CurrentUser.OpenSubKey("Software\\Gartech\\Fitness Reminder");
-                var _CommandPanel = RegSettings.GetValue("CommandPanel");
-                if (_CommandPanel != null)
+                try
                 {
-                    switch (Convert.ToChar(_CommandPanel))
+                    var _CommandPanel = RegSettings.GetValue("CommandPanel");
+                    if (_CommandPanel != null)
                     {
-                        case 'T':
-                            ToolStripActivity.Parent = ToolStripContainerActivity.TopToolStripPanel;
-                            break;
-                        case 'B':
-                            ToolStripActivity.Parent = ToolStripContainerActivity.BottomToolStripPanel;
-                            break;
-                        case 'L':
-                            ToolStripActivity.Parent = ToolStripContainerActivity.LeftToolStripPanel;
-                            break;
-                        case 'R':
-                            ToolStripActivity.Parent = ToolStripContainerActivity.RightToolStripPanel;
-                            break;
+                        switch (Convert.ToChar(_CommandPanel))
+                        {
+                            case 'T':
+                                ToolStripActivity.Parent = ToolStripContainerActivity.TopToolStripPanel;
+                                break;
+                            case 'B':
+                                ToolStripActivity.Parent = ToolStripContainerActivity.BottomToolStripPanel;
+                                break;
+                            case 'L':
+                                ToolStripActivity.Parent = ToolStripContainerActivity.LeftToolStripPanel;
+                                break;
+                            case 'R':
+                                ToolStripActivity.Parent = ToolStripContainerActivity.RightToolStripPanel;
+                                break;
+                        }
                     }
                 }
-
-                var ActivitiesReg = RegSettings.GetValue("ActivityList");
-                if (ActivitiesReg != null)
+                catch (Exception Ex)
                 {
-                    using (var ms = new MemoryStream((byte[]) ActivitiesReg))
+                    MessageBox.Show(Ex.Message);
+                }
+
+                try
+                {
+                    var ActivitiesReg = RegSettings.GetValue("ActivityList");
+                    if (ActivitiesReg != null)
                     {
-                        var formatter = new BinaryFormatter();
-                        Activities = (Activity.ActivityList)formatter.Deserialize(ms);
+                        using (var ms = new MemoryStream((byte[]) ActivitiesReg))
+                        {
+                            var formatter = new BinaryFormatter();
+                            Activities = (Activity.ActivityList) formatter.Deserialize(ms);
+                        }
                     }
+                    else
+                    {
+                        Activities = new Activity.ActivityList();
+                    }
+                    ListViewActivity.Items.AddRange(Activities.ToLviRange());
                 }
-                else
+                catch (Exception Ex)
                 {
-                    Activities = new Activity.ActivityList();
+                    MessageBox.Show(Ex.Message);
                 }
-                ListViewActivity.Items.AddRange(Activities.ToLviRange());
-
+                
+                try
+                {
                 var _DefaultDelayPre = RegSettings.GetValue("DefaultDelayPre");
                 if (_DefaultDelayPre != null)
                 {
-                    NumericReminderPre.Value = Convert.ToInt32(DefaultDelayPre);
+                    NumericReminderPre.Value = Convert.ToInt32(_DefaultDelayPre);
                 }
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
+                }
+                    
+                try
+                {
                 var _DefaultDuration = RegSettings.GetValue("DefaultDuration");
                 if (_DefaultDuration != null)
                 {
-                    NumericReminderDuration.Value = Convert.ToInt32(DefaultDelayPre);
+                    NumericReminderDuration.Value = Convert.ToInt32(_DefaultDuration);
                 }
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
+                }
+                    
+                try
+                {
                 var _DefaultDelayPost = RegSettings.GetValue("DefaultDelayPost");
                 if (_DefaultDelayPost != null)
                 {
-                    NumericReminderPost.Value = Convert.ToInt32(DefaultDuration);
+                    NumericReminderPost.Value = Convert.ToInt32(_DefaultDelayPost);
                 }
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
+                }
+                    
+                try
+                {
                 var _DisplayType = RegSettings.GetValue("DisplayType");
                 if (_DisplayType != null)
                 {
                     switch (Convert.ToInt32(_DisplayType))
                     {
                         case 1:
-                            radioButton1.Checked = true;
+                            RadioButtonBalloon.Checked = true;
                             break;
                         case 2:
-                            radioButton2.Checked = true;
+                            RadioButtonSplash.Checked = true;
                             break;
                     }
+                }
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
+                }
+
+                try
+                {
+                var _DisplayFont = RegSettings.GetValue("DisplayFont");
+                if (_DisplayFont != null)
+                {
+                    using (var ms = new MemoryStream((byte[])_DisplayFont))
+                    {
+                        var formatter = new BinaryFormatter();
+                        LabelSplashExample.Font = (System.Drawing.Font)formatter.Deserialize(ms);
+                    }
+                }
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
+                }
+                try
+                {
+                    var _DisplayBackColor = RegSettings.GetValue("DisplayBackColor");
+                    if (_DisplayBackColor != null)
+                    {
+                        using (var ms = new MemoryStream((byte[])_DisplayBackColor))
+                        {
+                            var formatter = new BinaryFormatter();
+                            LabelSplashExample.BackColor = (System.Drawing.Color)formatter.Deserialize(ms);
+                        }
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
                 }
             }
             catch (Exception Ex)
             {
+                MessageBox.Show(Ex.Message);
             }
         }
 
@@ -190,6 +269,34 @@ namespace Fitness_Minder
             ToolStripButtonDelete.Enabled = (ListViewActivity.SelectedItems.Count > 0);
         }
 
+        private void RadioButtonBalloon_CheckedChanged(object sender, EventArgs e)
+        {
+            GroupBoxSplash.Visible = RadioButtonSplash.Checked;
+        }
+
+        private void RadioButtonSplash_CheckedChanged(object sender, EventArgs e)
+        {
+            GroupBoxSplash.Visible = RadioButtonSplash.Checked;
+        }
+
+        private void ButtonSplashFont_Click(object sender, EventArgs e)
+        {
+            FontDialogSplash.Font = LabelSplashExample.Font;
+            if (FontDialogSplash.ShowDialog() == DialogResult.OK)
+            {
+                LabelSplashExample.Font = FontDialogSplash.Font;
+            }
+        }
+
+        private void ButtonSplashBackColor_Click(object sender, EventArgs e)
+        {
+            ColorDialogSplash.Color = LabelSplashExample.BackColor;
+            if (ColorDialogSplash.ShowDialog() == DialogResult.OK)
+            {
+                LabelSplashExample.BackColor = ColorDialogSplash.Color;
+            }
+        }
+
         private void ButtonOK_Click(object sender, EventArgs e)
         {
             if (ListViewActivity.Items.Count > 0)
@@ -226,7 +333,19 @@ namespace Fitness_Minder
                     RegSettings.SetValue("DefaultDelayPre", NumericReminderPre.Value, RegistryValueKind.DWord);
                     RegSettings.SetValue("DefaultDuration", NumericReminderDuration.Value, RegistryValueKind.DWord);
                     RegSettings.SetValue("DefaultDelayPost", NumericReminderPost.Value, RegistryValueKind.DWord);
-                    RegSettings.SetValue("DisplayType", (radioButton1.Checked ? 1 : 2), RegistryValueKind.DWord);
+                    RegSettings.SetValue("DisplayType", (RadioButtonBalloon.Checked ? 1 : 2), RegistryValueKind.DWord);
+                    using (var ms = new MemoryStream())
+                    {
+                        var formatter = new BinaryFormatter();
+                        formatter.Serialize(ms, LabelSplashExample.Font);
+                        RegSettings.SetValue("DisplayFont", ms.ToArray(), RegistryValueKind.Binary);
+                    }
+                    using (var ms = new MemoryStream())
+                    {
+                        var formatter = new BinaryFormatter();
+                        formatter.Serialize(ms, LabelSplashExample.BackColor);
+                        RegSettings.SetValue("DisplayBackColor", ms.ToArray(), RegistryValueKind.Binary);
+                    }
                 }
                 catch (Exception Ex)
                 {
