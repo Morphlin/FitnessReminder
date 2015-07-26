@@ -17,7 +17,7 @@ namespace Fitness_Minder
         }
 
         private bool _Example;
-        internal void ShowIt(string ActivityName, System.Drawing.Font Font, System.Drawing.Color BackColor, bool Example = false)
+        internal void ShowIt(string ActivityName, System.Drawing.Font Font, System.Drawing.Color BackColor, bool Example)
         {
             LabelActivity.Text = ActivityName;
             LabelActivity.Font = Font;

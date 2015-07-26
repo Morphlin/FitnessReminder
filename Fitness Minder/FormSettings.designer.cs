@@ -120,9 +120,9 @@
             // 
             this.ButtonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonOK.Location = new System.Drawing.Point(174, 358);
+            this.ButtonOK.Location = new System.Drawing.Point(150, 358);
             this.ButtonOK.Name = "ButtonOK";
-            this.ButtonOK.Size = new System.Drawing.Size(84, 23);
+            this.ButtonOK.Size = new System.Drawing.Size(108, 23);
             this.ButtonOK.TabIndex = 0;
             this.ButtonOK.Text = "Save && &Run";
             this.ButtonOK.UseVisualStyleBackColor = true;
@@ -136,7 +136,7 @@
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(84, 23);
             this.ButtonCancel.TabIndex = 1;
-            this.ButtonCancel.Text = "&Exit";
+            this.ButtonCancel.Text = "&Cancel";
             this.ButtonCancel.UseVisualStyleBackColor = true;
             this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
@@ -696,7 +696,7 @@
             // 
             // ButtonResetSettings
             // 
-            this.ButtonResetSettings.Location = new System.Drawing.Point(55, 27);
+            this.ButtonResetSettings.Location = new System.Drawing.Point(55, 25);
             this.ButtonResetSettings.Name = "ButtonResetSettings";
             this.ButtonResetSettings.Size = new System.Drawing.Size(194, 23);
             this.ButtonResetSettings.TabIndex = 19;

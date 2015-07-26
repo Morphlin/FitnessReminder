@@ -58,7 +58,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormRemind";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Fitness Minder";
             this.Load += new System.EventHandler(this.FormRemind_Load);
             this.ResumeLayout(false);

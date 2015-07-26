@@ -32,7 +32,7 @@ namespace Fitness_Minder
         /// 
         /// </summary>
         private Activity.ActivityList Activities;
-        private FormRemind RemindForm = new FormRemind();
+        private List<FormRemind> RemindForm = new List<FormRemind>();
         private System.Media.SoundPlayer MediaPlayer;
 
         private const string AutoStartKey = "Software\\Microsoft\\Windows\\CurrentVersion\\Run";
@@ -227,9 +227,27 @@ namespace Fitness_Minder
             GroupBoxSplash.Visible = RadioButtonSplash.Checked;
         }
 
+        private void SplashShow(string ActivityName, System.Drawing.Font Font, System.Drawing.Color BackColor, bool Example = false)
+        {
+            foreach (var Scr in Screen.AllScreens)
+            {
+                var RemindFormAdd = new FormRemind();
+                RemindForm.Add(RemindFormAdd);
+                RemindFormAdd.Left = Scr.Bounds.Left;
+                RemindFormAdd.ShowIt(ActivityName, Font, BackColor, Example);
+            }
+        }
+        private void SplashHide()
+        {
+            foreach (var Form in RemindForm)
+            {
+                Form.Close();
+            }
+            RemindForm.Clear();
+        }
         private void LabelSplashExample_Click(object sender, EventArgs e)
         {
-            RemindForm.ShowIt("This is a test!", LabelSplashExample.Font, LabelSplashExample.BackColor, true);
+            SplashShow("This is a test!", LabelSplashExample.Font, LabelSplashExample.BackColor, true);
         }
 
         private void LabelSound_Click(object sender, EventArgs e)
@@ -295,6 +313,7 @@ namespace Fitness_Minder
 
         private void ButtonOK_Click(object sender, EventArgs e)
         {
+            SplashHide();
             if (ListViewActivity.Items.Count > 0)
             {
                 if (ListViewActivity.CheckedItems.Count > 0)
@@ -333,8 +352,7 @@ namespace Fitness_Minder
             if (InitialStart)
             {
                 InitialStart = false;
-                ButtonOK.Text = "&Ok";
-                ButtonCancel.Text = "&Cancel";
+                ButtonOK.Text = "&Save and resume";
             }
             TimerEnabled = true;
             Close();
@@ -407,7 +425,7 @@ namespace Fitness_Minder
                             }
                             if (RadioButtonSplash.Checked)
                             {
-                                RemindForm.ShowIt(Activities[CurrentActivity].Name, LabelSplashExample.Font, LabelSplashExample.BackColor);
+                                SplashShow(Activities[CurrentActivity].Name, LabelSplashExample.Font, LabelSplashExample.BackColor);
                                 if (CheckBoxSound.Checked) MediaPlayer.Play();
                             }
                         }
@@ -420,7 +438,7 @@ namespace Fitness_Minder
                             FitnessTimerTick = 0;
                             if (RadioButtonSplash.Checked)
                             {
-                                RemindForm.Hide();
+                                SplashHide();
                             }
                         }
                         break;
