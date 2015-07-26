@@ -200,6 +200,11 @@ namespace Fitness_Minder
             }
         }
 
+        private void ToolStripButtonEdit_Click(object sender, EventArgs e)
+        {
+            //add edit
+        }
+
         private void ToolStripButtonDown_Click(object sender, EventArgs e)
         {
             if (ListViewActivity.SelectedItems.Count > 0)
@@ -309,29 +314,37 @@ namespace Fitness_Minder
         {
             if (ListViewActivity.Items.Count > 0)
             {
-                Activities.Clear();
-                Activities.AddLviRange(ListViewActivity.Items);
+                if (ListViewActivity.CheckedItems.Count > 0)
+                {
+                    Activities.Clear();
+                    Activities.AddLviRange(ListViewActivity.Items);
 
-                RegSettings.SetCommandPanel(ToolStripActivity.Parent);
+                    RegSettings.SetCommandPanel(ToolStripActivity.Parent);
 
-                RegSettings.SetActivityList(Activities);
+                    RegSettings.SetActivityList(Activities);
 
-                RegSettings.SetDefaultDelayPre(NumericReminderPre.Value);
-                RegSettings.SetDefaultDuration(NumericReminderDuration.Value);
-                RegSettings.SetDefaultDelayPost(NumericReminderPost.Value);
+                    RegSettings.SetDefaultDelayPre(NumericReminderPre.Value);
+                    RegSettings.SetDefaultDuration(NumericReminderDuration.Value);
+                    RegSettings.SetDefaultDelayPost(NumericReminderPost.Value);
 
-                RegSettings.SetDisplayType((RadioButtonSplash.Checked ? 1 : 2));
-                RegSettings.SetDisplayFont(LabelSplashExample.Font);
-                RegSettings.SetDisplayBackColor(LabelSplashExample.BackColor);
+                    RegSettings.SetDisplayType((RadioButtonSplash.Checked ? 1 : 2));
+                    RegSettings.SetDisplayFont(LabelSplashExample.Font);
+                    RegSettings.SetDisplayBackColor(LabelSplashExample.BackColor);
 
-                RegSettings.SetDisplaySound(CheckBoxSound.Checked);
-                RegSettings.SetDisplaySoundFile(MediaPlayer);
+                    RegSettings.SetDisplaySound(CheckBoxSound.Checked);
+                    RegSettings.SetDisplaySoundFile(MediaPlayer);
 
-                AutoStartAtLogon = CheckBoxWindowsStart.Checked;
+                    AutoStartAtLogon = CheckBoxWindowsStart.Checked;
+                }
+                else
+                {
+                    MessageBox.Show("Please enable at least one activity!");
+                    return;
+                }
             }
             else
             {
-                MessageBox.Show("No activity!");
+                MessageBox.Show("Please add at least one activity!");
                 return;
             }
             if (InitialStart)
@@ -473,15 +486,15 @@ namespace Fitness_Minder
             {
                 _Activities.Clear();
             }
-            internal void Add(string Name, int DelayPre, int Duration, int DelayPost)
+            internal void Add(string Name, bool Enable, int DelayPre, int Duration, int DelayPost)
             {
-                _Activities.Add(new ActivityItem(Name, DelayPre, Duration, DelayPost));
+                _Activities.Add(new ActivityItem(Name, Enable, DelayPre, Duration, DelayPost));
             }
             internal void AddLviRange(ListView.ListViewItemCollection LVIs)
             {
                 foreach (ListViewItem LVI in LVIs)
                 {
-                    _Activities.Add(new ActivityItem(LVI.Text, Convert.ToInt32(LVI.SubItems[1].Text),
+                    _Activities.Add(new ActivityItem(LVI.Text, LVI.Checked, Convert.ToInt32(LVI.SubItems[1].Text),
                         Convert.ToInt32(LVI.SubItems[2].Text), Convert.ToInt32(LVI.SubItems[3].Text)));
                 }
             }
@@ -491,6 +504,7 @@ namespace Fitness_Minder
                 foreach (var Act in _Activities)
                 {
                     var EntryLVI = new ListViewItem(Act.Name);
+                    EntryLVI.Checked = Act.Enable;
                     EntryLVI.ImageIndex = 0;
                     EntryLVI.SubItems.Add(Act.DelayPre.ToString());
                     EntryLVI.SubItems.Add(Act.Duration.ToString());
@@ -519,6 +533,12 @@ namespace Fitness_Minder
             {
                 get { return _Name; }
             }
+            private bool _Enable;
+            internal bool Enable
+            {
+                get { return _Enable; }
+                set { _Enable = value; }
+            }
             private int _DelayPre;
             internal int DelayPre
             {
@@ -534,9 +554,10 @@ namespace Fitness_Minder
             {
                 get { return _DelayPost; }
             }
-            internal ActivityItem(string Name, int DelayPre, int Duration, int DelayPost)
+            internal ActivityItem(string Name, bool Enable, int DelayPre, int Duration, int DelayPost)
             {
                 _Name = Name;
+                _Enable = Enable;
                 _DelayPre = DelayPre;
                 _Duration = Duration;
                 _DelayPost = DelayPost;

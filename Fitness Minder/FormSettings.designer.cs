@@ -235,6 +235,7 @@
             this.ToolStripButtonEdit.Name = "ToolStripButtonEdit";
             this.ToolStripButtonEdit.Size = new System.Drawing.Size(23, 22);
             this.ToolStripButtonEdit.Text = "toolStripButton1";
+            this.ToolStripButtonEdit.Click += new System.EventHandler(this.ToolStripButtonEdit_Click);
             // 
             // ToolStripButtonDelete
             // 
