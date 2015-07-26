@@ -1,4 +1,4 @@
-﻿namespace Fitness_Minder
+﻿namespace FitnessReminder
 {
     partial class FormSettings
     {

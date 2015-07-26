@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Fitness_Minder
+namespace FitnessReminder
 {
     internal partial class FormRemind : Form
     {

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fitness Minder")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Fitness Reminder")]
+[assembly: AssemblyDescription("Reminder to workout every now and then when working on the computer.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Fitness Minder")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("Garnote-Technologies")]
+[assembly: AssemblyProduct("FitnessReminder")]
+[assembly: AssemblyCopyright("Copyright © Gartech 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

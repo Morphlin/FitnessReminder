@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace Fitness_Minder
+namespace FitnessReminder
 {
     internal partial class FormSettings : Form
     {
