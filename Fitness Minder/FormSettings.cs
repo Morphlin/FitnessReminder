@@ -31,18 +31,6 @@ namespace Fitness_Minder
         /// <summary>
         /// 
         /// </summary>
-        internal int DefaultDelayPre
-        {
-            get { return (Convert.ToInt32(NumericReminderPre.Value)*60); }
-        }
-        internal int DefaultDuration
-        {
-            get { return Convert.ToInt32(NumericReminderDuration.Value); }
-        }
-        internal int DefaultDelayPost
-        {
-            get { return (Convert.ToInt32(NumericReminderPost.Value)*60); }
-        }
         private Activity.ActivityList Activities;
         private FormRemind RemindForm = new FormRemind();
         private System.Media.SoundPlayer MediaPlayer;
@@ -173,7 +161,7 @@ namespace Fitness_Minder
         private void ToolStripButtonAdd_Click(object sender, EventArgs e)
         {
             var ItemForm = new FormItem();
-            ItemForm.ShowIt(ListViewActivity, DefaultDelayPre, DefaultDuration, DefaultDelayPost);
+            ItemForm.ShowIt(ListViewActivity, Convert.ToInt32(NumericReminderPre.Value) * 60, Convert.ToInt32(NumericReminderDuration.Value), Convert.ToInt32(NumericReminderPost.Value) * 60);
         }
 
         private void ToolStripButtonEdit_Click(object sender, EventArgs e)
@@ -384,9 +372,22 @@ namespace Fitness_Minder
             Close();
         }
 
+        private int CurrentActivity = 0;
+        private void CurrentActivityIncrement()
+        {
+            CurrentActivity++;
+            if (CurrentActivity > Activities.Count - 1)
+            {
+                CurrentActivity = 0;
+            }
+            if (!Activities[CurrentActivity].Enable)
+            {
+                CurrentActivityIncrement();
+            }
+        }
+
         private int FitnessTimerTick = 0;
         private int FitnessTimerStep = 1;
-        private int CurrentActivity = 0;
         private void FitnessTimer_Tick(object sender, EventArgs e)
         {
             if (TimerEnabled)
@@ -429,11 +430,7 @@ namespace Fitness_Minder
                         {
                             FitnessTimerStep = 1;
                             FitnessTimerTick = 0;
-                            CurrentActivity++;
-                            if (CurrentActivity > Activities.Count - 1)
-                            {
-                                CurrentActivity = 0;
-                            }
+                            CurrentActivityIncrement();
                         }
                         break;
                     default:

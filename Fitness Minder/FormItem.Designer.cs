@@ -190,11 +190,6 @@
             0,
             0,
             0});
-            this.NumericReminderPost.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.NumericReminderPost.Name = "NumericReminderPost";
             this.NumericReminderPost.Size = new System.Drawing.Size(93, 21);
             this.NumericReminderPost.TabIndex = 24;

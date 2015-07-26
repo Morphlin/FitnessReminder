@@ -120,11 +120,11 @@
             // 
             this.ButtonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonOK.Location = new System.Drawing.Point(192, 358);
+            this.ButtonOK.Location = new System.Drawing.Point(174, 358);
             this.ButtonOK.Name = "ButtonOK";
-            this.ButtonOK.Size = new System.Drawing.Size(75, 23);
+            this.ButtonOK.Size = new System.Drawing.Size(84, 23);
             this.ButtonOK.TabIndex = 0;
-            this.ButtonOK.Text = "&Run";
+            this.ButtonOK.Text = "Save && &Run";
             this.ButtonOK.UseVisualStyleBackColor = true;
             this.ButtonOK.Click += new System.EventHandler(this.ButtonOK_Click);
             // 
@@ -132,9 +132,9 @@
             // 
             this.ButtonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonCancel.Location = new System.Drawing.Point(273, 358);
+            this.ButtonCancel.Location = new System.Drawing.Point(264, 358);
             this.ButtonCancel.Name = "ButtonCancel";
-            this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
+            this.ButtonCancel.Size = new System.Drawing.Size(84, 23);
             this.ButtonCancel.TabIndex = 1;
             this.ButtonCancel.Text = "&Exit";
             this.ButtonCancel.UseVisualStyleBackColor = true;
@@ -213,7 +213,7 @@
             this.ToolStripButtonDown});
             this.ToolStripActivity.Location = new System.Drawing.Point(3, 0);
             this.ToolStripActivity.Name = "ToolStripActivity";
-            this.ToolStripActivity.Size = new System.Drawing.Size(164, 25);
+            this.ToolStripActivity.Size = new System.Drawing.Size(133, 25);
             this.ToolStripActivity.TabIndex = 0;
             // 
             // ToolStripButtonAdd
@@ -522,11 +522,6 @@
             this.NumericReminderPost.Location = new System.Drawing.Point(117, 84);
             this.NumericReminderPost.Maximum = new decimal(new int[] {
             600,
-            0,
-            0,
-            0});
-            this.NumericReminderPost.Minimum = new decimal(new int[] {
-            1,
             0,
             0,
             0});
