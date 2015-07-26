@@ -1,7 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using Microsoft.Win32;
@@ -25,9 +26,8 @@ namespace Fitness_Minder
         {
             get { return (Convert.ToInt32(NumericReminderPost.Value)*60); }
         }
-        private int CurrentActivity = 0;
-        internal Activity.ActivityList Activities;
-        private Form RemindForm = new FormRemind();
+        private Activity.ActivityList Activities;
+        private FormRemind RemindForm = new FormRemind();
 
         internal FormSettings()
         {
@@ -126,7 +126,7 @@ namespace Fitness_Minder
                 {
                     MessageBox.Show(Ex.Message);
                 }
-                    
+
                 try
                 {
                 var _DisplayType = RegSettings.GetValue("DisplayType");
@@ -185,6 +185,20 @@ namespace Fitness_Minder
             {
                 MessageBox.Show(Ex.Message);
             }
+
+            try
+            {
+                RegistryKey RegSettings = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run");
+                var _AutoStartup = RegSettings.GetValue("Fitness Reminder");
+                if (_AutoStartup != null)
+                {
+                    CheckBoxWindowsStart.Checked = true;
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
         }
 
         private void FormSettings_FormClosing(object sender, FormClosingEventArgs e)
@@ -216,14 +230,20 @@ namespace Fitness_Minder
             ShowIt();
         }
 
+        internal void AddLviActivity(string Name, int DelayPre, int Duration, int DelayPost)
+        {
+            var EntryLVI = new ListViewItem(Name);
+            EntryLVI.ImageIndex = 0;
+            EntryLVI.SubItems.Add(DelayPre.ToString());
+            EntryLVI.SubItems.Add(Duration.ToString());
+            EntryLVI.SubItems.Add(DelayPost.ToString());
+            ListViewActivity.Items.Add(EntryLVI);
+        }
+
         private void ToolStripButtonAdd_Click(object sender, EventArgs e)
         {
             var ItemForm = new FormItem(this);
-            if (ItemForm.ShowDialog() == DialogResult.OK)
-            {
-                ListViewActivity.Items.Clear();
-                ListViewActivity.Items.AddRange(Activities.ToLviRange());
-            }
+            ItemForm.ShowDialog();
         }
 
         private void ToolStripButtonUp_Click(object sender, EventArgs e)
@@ -279,6 +299,11 @@ namespace Fitness_Minder
             GroupBoxSplash.Visible = RadioButtonSplash.Checked;
         }
 
+        private void LabelSplashExample_Click(object sender, EventArgs e)
+        {
+            RemindForm.ShowIt("This is a test!", LabelSplashExample.Font, LabelSplashExample.BackColor, true);
+        }
+
         private void ButtonSplashFont_Click(object sender, EventArgs e)
         {
             FontDialogSplash.Font = LabelSplashExample.Font;
@@ -306,8 +331,7 @@ namespace Fitness_Minder
 
                 try
                 {
-                    RegistryKey RegSettings =
-                        Registry.CurrentUser.CreateSubKey("Software\\Gartech\\Fitness Reminder");
+                    var RegSettings = Registry.CurrentUser.CreateSubKey("Software\\Gartech\\Fitness Reminder");
                     if (ToolStripActivity.Parent == ToolStripContainerActivity.TopToolStripPanel)
                     {
                         RegSettings.SetValue("CommandPanel", 'T', RegistryValueKind.String);
@@ -349,6 +373,23 @@ namespace Fitness_Minder
                 }
                 catch (Exception Ex)
                 {
+                    MessageBox.Show(Ex.Message);
+                }
+                try
+                {
+                    var RegSettings2 = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                    if (CheckBoxWindowsStart.Checked)
+                    {
+                        RegSettings2.SetValue("Fitness Reminder", Application.ExecutablePath, RegistryValueKind.String);
+                    }
+                    else
+                    {
+                        RegSettings2.DeleteValue("Fitness Reminder", false);
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
                 }
             }
             else
@@ -400,6 +441,7 @@ namespace Fitness_Minder
 
         private int FitnessTimerTick = 0;
         private int FitnessTimerStep = 1;
+        private int CurrentActivity = 0;
         private void FitnessTimer_Tick(object sender, EventArgs e)
         {
             if (TimerEnabled)
@@ -413,7 +455,14 @@ namespace Fitness_Minder
                         {
                             FitnessTimerStep = 2;
                             FitnessTimerTick = 0;
-                            RemindForm.Show();
+                            if (RadioButtonBalloon.Checked)
+                            {
+                                FitnessNotifyIcon.ShowBalloonTip(2000, "Fitness Reminder!", "It's time for " + Activities[CurrentActivity].Name + "!!!", ToolTipIcon.Warning);
+                            }
+                            if (RadioButtonSplash.Checked)
+                            {
+                                RemindForm.ShowIt(Activities[CurrentActivity].Name, LabelSplashExample.Font, LabelSplashExample.BackColor);
+                            }
                         }
                         break;
                     case 2: //Activity Reminder Duration
@@ -422,7 +471,10 @@ namespace Fitness_Minder
                         {
                             FitnessTimerStep = 3;
                             FitnessTimerTick = 0;
-                            RemindForm.Hide();
+                            if (RadioButtonSplash.Checked)
+                            {
+                                RemindForm.Hide();
+                            }
                         }
                         break;
                     case 3: //Activity Post-Delay
@@ -431,6 +483,11 @@ namespace Fitness_Minder
                         {
                             FitnessTimerStep = 1;
                             FitnessTimerTick = 0;
+                            CurrentActivity++;
+                            if (CurrentActivity > Activities.Count - 1)
+                            {
+                                CurrentActivity = 0;
+                            }
                         }
                         break;
                     default:
@@ -462,14 +519,13 @@ namespace Fitness_Minder
                 get
                 {
                     return _Activities[Index];
-                    /*foreach (var Act in _Activities)
-                    {
-                        if (Act.Index == Index)
-                        {
-                            return Act;
-                        }
-                    }
-                    return null;*/
+                }
+            }
+            internal int Count
+            {
+                get
+                {
+                    return _Activities.Count();
                 }
             }
             internal void Clear()
@@ -478,14 +534,14 @@ namespace Fitness_Minder
             }
             internal void Add(string Name, int DelayPre, int Duration, int DelayPost)
             {
-                _Activities.Add(new ActivityItem(Name, DelayPre, Duration, DelayPost/*, _Activities.Count*/));
+                _Activities.Add(new ActivityItem(Name, DelayPre, Duration, DelayPost));
             }
             internal void AddLviRange(ListView.ListViewItemCollection LVIs)
             {
                 foreach (ListViewItem LVI in LVIs)
                 {
                     _Activities.Add(new ActivityItem(LVI.Text, Convert.ToInt32(LVI.SubItems[1].Text),
-                        Convert.ToInt32(LVI.SubItems[2].Text), Convert.ToInt32(LVI.SubItems[3].Text)/*, Convert.ToInt32(LVI.SubItems[4].Text)*/));
+                        Convert.ToInt32(LVI.SubItems[2].Text), Convert.ToInt32(LVI.SubItems[3].Text)));
                 }
             }
             internal ListViewItem[] ToLviRange()
@@ -498,7 +554,6 @@ namespace Fitness_Minder
                     EntryLVI.SubItems.Add(Act.DelayPre.ToString());
                     EntryLVI.SubItems.Add(Act.Duration.ToString());
                     EntryLVI.SubItems.Add(Act.DelayPost.ToString());
-                    //EntryLVI.SubItems.Add(Act.Index.ToString());
                     LVIs.Add(EntryLVI);
                 }
                 return LVIs.ToArray();
@@ -538,18 +593,12 @@ namespace Fitness_Minder
             {
                 get { return _DelayPost; }
             }
-            /*private int _Index;
-            internal int Index
-            {
-                get { return _Index; }
-            }*/
-            internal ActivityItem(string Name, int DelayPre, int Duration, int DelayPost/*, int Index*/)
+            internal ActivityItem(string Name, int DelayPre, int Duration, int DelayPost)
             {
                 _Name = Name;
                 _DelayPre = DelayPre;
                 _Duration = Duration;
                 _DelayPost = DelayPost;
-                /*_Index = Index;*/
             }
         }
     }

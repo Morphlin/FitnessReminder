@@ -16,10 +16,19 @@ namespace Fitness_Minder
             WindowState = FormWindowState.Maximized;
         }
 
-        internal void ShowIt(string ActivityName)
+        private bool _Example;
+        internal void ShowIt(string ActivityName, System.Drawing.Font Font, System.Drawing.Color BackColor, bool Example = false)
         {
             LabelActivity.Text = ActivityName;
+            LabelActivity.Font = Font;
+            LabelActivity.BackColor = BackColor;
+            _Example = Example;
             Show();
+        }
+
+        private void LabelActivity_Click(object sender, EventArgs e)
+        {
+            if (_Example) Hide();
         }
     }
 }

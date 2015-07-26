@@ -36,12 +36,14 @@
             // 
             this.LabelActivity.BackColor = System.Drawing.Color.Orange;
             this.LabelActivity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LabelActivity.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelActivity.Location = new System.Drawing.Point(0, 0);
             this.LabelActivity.Name = "LabelActivity";
             this.LabelActivity.Size = new System.Drawing.Size(551, 283);
             this.LabelActivity.TabIndex = 1;
             this.LabelActivity.Text = "FITNESS!";
             this.LabelActivity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LabelActivity.Click += new System.EventHandler(this.LabelActivity_Click);
             // 
             // FormRemind
             // 
