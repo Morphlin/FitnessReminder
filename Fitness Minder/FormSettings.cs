@@ -28,6 +28,7 @@ namespace Fitness_Minder
         }
         private Activity.ActivityList Activities;
         private FormRemind RemindForm = new FormRemind();
+        private FileInfo SoundFile;
 
         internal FormSettings()
         {
@@ -180,6 +181,8 @@ namespace Fitness_Minder
                 {
                     MessageBox.Show(Ex.Message);
                 }
+
+                //load PlaySound et PlaySoundFile from registry
             }
             catch (Exception Ex)
             {
@@ -322,6 +325,21 @@ namespace Fitness_Minder
             }
         }
 
+        private void CheckBoxSound_CheckedChanged(object sender, EventArgs e)
+        {
+            ButtonBrowseSound.Enabled = CheckBoxSound.Checked;
+        }
+
+        private void ButtonBrowseSound_Click(object sender, EventArgs e)
+        {
+            if (SoundFile != null) OpenFileDialogSound.FileName = SoundFile.FullName;
+            if (OpenFileDialogSound.ShowDialog() == DialogResult.OK)
+            {
+                SoundFile = new FileInfo(OpenFileDialogSound.FileName);
+                LabelSound.Text = SoundFile.Name;
+            }
+        }
+
         private void ButtonOK_Click(object sender, EventArgs e)
         {
             if (ListViewActivity.Items.Count > 0)
@@ -370,6 +388,8 @@ namespace Fitness_Minder
                         formatter.Serialize(ms, LabelSplashExample.BackColor);
                         RegSettings.SetValue("DisplayBackColor", ms.ToArray(), RegistryValueKind.Binary);
                     }
+
+                    //save PlaySound et PlaySoundFile to registry
                 }
                 catch (Exception Ex)
                 {

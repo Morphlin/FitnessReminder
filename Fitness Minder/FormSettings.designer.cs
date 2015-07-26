@@ -82,10 +82,14 @@
             this.FontDialogSplash = new System.Windows.Forms.FontDialog();
             this.ColorDialogSplash = new System.Windows.Forms.ColorDialog();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.LabelSystem = new System.Windows.Forms.Label();
+            this.PictureBoxSystem = new System.Windows.Forms.PictureBox();
             this.CheckBoxWindowsStart = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.GroupBoxSystem = new System.Windows.Forms.GroupBox();
+            this.CheckBoxSound = new System.Windows.Forms.CheckBox();
+            this.ButtonBrowseSound = new System.Windows.Forms.Button();
+            this.OpenFileDialogSound = new System.Windows.Forms.OpenFileDialog();
+            this.LabelSound = new System.Windows.Forms.Label();
             this.TabControlSettings.SuspendLayout();
             this.TabPageActivity.SuspendLayout();
             this.ToolStripContainerActivity.BottomToolStripPanel.SuspendLayout();
@@ -105,14 +109,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxDefaults)).BeginInit();
             this.ContextMenuStripNotify.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxSystem)).BeginInit();
+            this.GroupBoxSystem.SuspendLayout();
             this.SuspendLayout();
             // 
             // ButtonOK
             // 
+            this.ButtonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonOK.Location = new System.Drawing.Point(171, 329);
+            this.ButtonOK.Location = new System.Drawing.Point(192, 358);
             this.ButtonOK.Name = "ButtonOK";
             this.ButtonOK.Size = new System.Drawing.Size(75, 23);
             this.ButtonOK.TabIndex = 0;
@@ -122,8 +127,9 @@
             // 
             // ButtonCancel
             // 
+            this.ButtonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonCancel.Location = new System.Drawing.Point(252, 329);
+            this.ButtonCancel.Location = new System.Drawing.Point(273, 358);
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
             this.ButtonCancel.TabIndex = 1;
@@ -133,6 +139,9 @@
             // 
             // TabControlSettings
             // 
+            this.TabControlSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControlSettings.Controls.Add(this.TabPageActivity);
             this.TabControlSettings.Controls.Add(this.TabPageReminder);
             this.TabControlSettings.Controls.Add(this.TabPageDefaults);
@@ -140,7 +149,7 @@
             this.TabControlSettings.Location = new System.Drawing.Point(12, 12);
             this.TabControlSettings.Name = "TabControlSettings";
             this.TabControlSettings.SelectedIndex = 0;
-            this.TabControlSettings.Size = new System.Drawing.Size(315, 310);
+            this.TabControlSettings.Size = new System.Drawing.Size(336, 339);
             this.TabControlSettings.TabIndex = 8;
             // 
             // TabPageActivity
@@ -151,13 +160,16 @@
             this.TabPageActivity.Location = new System.Drawing.Point(4, 22);
             this.TabPageActivity.Name = "TabPageActivity";
             this.TabPageActivity.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageActivity.Size = new System.Drawing.Size(307, 284);
+            this.TabPageActivity.Size = new System.Drawing.Size(328, 313);
             this.TabPageActivity.TabIndex = 0;
             this.TabPageActivity.Text = "Activity List";
             this.TabPageActivity.UseVisualStyleBackColor = true;
             // 
             // ToolStripContainerActivity
             // 
+            this.ToolStripContainerActivity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // ToolStripContainerActivity.BottomToolStripPanel
             // 
@@ -166,10 +178,10 @@
             // ToolStripContainerActivity.ContentPanel
             // 
             this.ToolStripContainerActivity.ContentPanel.Controls.Add(this.ListViewActivity);
-            this.ToolStripContainerActivity.ContentPanel.Size = new System.Drawing.Size(283, 153);
+            this.ToolStripContainerActivity.ContentPanel.Size = new System.Drawing.Size(304, 182);
             this.ToolStripContainerActivity.Location = new System.Drawing.Point(11, 67);
             this.ToolStripContainerActivity.Name = "ToolStripContainerActivity";
-            this.ToolStripContainerActivity.Size = new System.Drawing.Size(283, 203);
+            this.ToolStripContainerActivity.Size = new System.Drawing.Size(304, 232);
             this.ToolStripContainerActivity.TabIndex = 12;
             this.ToolStripContainerActivity.Text = "ToolStripContainerActivity";
             // 
@@ -258,7 +270,7 @@
             this.ListViewActivity.Location = new System.Drawing.Point(0, 0);
             this.ListViewActivity.MultiSelect = false;
             this.ListViewActivity.Name = "ListViewActivity";
-            this.ListViewActivity.Size = new System.Drawing.Size(283, 153);
+            this.ListViewActivity.Size = new System.Drawing.Size(304, 182);
             this.ListViewActivity.TabIndex = 0;
             this.ListViewActivity.UseCompatibleStateImageBehavior = false;
             this.ListViewActivity.View = System.Windows.Forms.View.Details;
@@ -267,13 +279,15 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Activity";
-            this.columnHeader1.Width = 257;
+            this.columnHeader1.Width = 274;
             // 
             // LabelActivity
             // 
+            this.LabelActivity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelActivity.Location = new System.Drawing.Point(65, 13);
             this.LabelActivity.Name = "LabelActivity";
-            this.LabelActivity.Size = new System.Drawing.Size(229, 48);
+            this.LabelActivity.Size = new System.Drawing.Size(250, 48);
             this.LabelActivity.TabIndex = 11;
             this.LabelActivity.Text = "List of activites that the reminder will display. Diplayed in order from top to b" +
     "ottom. Unchecked items will be skipped.";
@@ -297,16 +311,18 @@
             this.TabPageReminder.Location = new System.Drawing.Point(4, 22);
             this.TabPageReminder.Name = "TabPageReminder";
             this.TabPageReminder.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageReminder.Size = new System.Drawing.Size(307, 284);
+            this.TabPageReminder.Size = new System.Drawing.Size(328, 313);
             this.TabPageReminder.TabIndex = 1;
             this.TabPageReminder.Text = "Reminder Settings";
             this.TabPageReminder.UseVisualStyleBackColor = true;
             // 
             // LabelReminder
             // 
+            this.LabelReminder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelReminder.Location = new System.Drawing.Point(65, 13);
             this.LabelReminder.Name = "LabelReminder";
-            this.LabelReminder.Size = new System.Drawing.Size(229, 48);
+            this.LabelReminder.Size = new System.Drawing.Size(250, 48);
             this.LabelReminder.TabIndex = 17;
             this.LabelReminder.Text = "The reminder can be displayed in a balloon tip or as a Splash screen. Select the " +
     "Splash option to tweak the font and the background.";
@@ -323,21 +339,25 @@
             // 
             // GroupBoxDisplay
             // 
+            this.GroupBoxDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBoxDisplay.Controls.Add(this.RadioButtonBalloon);
             this.GroupBoxDisplay.Controls.Add(this.RadioButtonSplash);
             this.GroupBoxDisplay.Location = new System.Drawing.Point(11, 69);
             this.GroupBoxDisplay.Name = "GroupBoxDisplay";
-            this.GroupBoxDisplay.Size = new System.Drawing.Size(283, 84);
+            this.GroupBoxDisplay.Size = new System.Drawing.Size(304, 84);
             this.GroupBoxDisplay.TabIndex = 14;
             this.GroupBoxDisplay.TabStop = false;
             this.GroupBoxDisplay.Text = "Reminder Type";
             // 
             // RadioButtonSplash
             // 
+            this.RadioButtonSplash.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioButtonSplash.Checked = true;
             this.RadioButtonSplash.Location = new System.Drawing.Point(21, 27);
             this.RadioButtonSplash.Name = "RadioButtonSplash";
-            this.RadioButtonSplash.Size = new System.Drawing.Size(234, 17);
+            this.RadioButtonSplash.Size = new System.Drawing.Size(255, 17);
             this.RadioButtonSplash.TabIndex = 1;
             this.RadioButtonSplash.TabStop = true;
             this.RadioButtonSplash.Text = "Splash screen (Full screen)";
@@ -346,9 +366,11 @@
             // 
             // RadioButtonBalloon
             // 
+            this.RadioButtonBalloon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioButtonBalloon.Location = new System.Drawing.Point(21, 51);
             this.RadioButtonBalloon.Name = "RadioButtonBalloon";
-            this.RadioButtonBalloon.Size = new System.Drawing.Size(234, 17);
+            this.RadioButtonBalloon.Size = new System.Drawing.Size(255, 17);
             this.RadioButtonBalloon.TabIndex = 0;
             this.RadioButtonBalloon.Text = "Balloon Tip (Notification from Tray Icon)";
             this.RadioButtonBalloon.UseVisualStyleBackColor = true;
@@ -356,20 +378,26 @@
             // 
             // GroupBoxSplash
             // 
+            this.GroupBoxSplash.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GroupBoxSplash.Controls.Add(this.LabelSound);
+            this.GroupBoxSplash.Controls.Add(this.ButtonBrowseSound);
+            this.GroupBoxSplash.Controls.Add(this.CheckBoxSound);
             this.GroupBoxSplash.Controls.Add(this.ButtonSplashBackColor);
             this.GroupBoxSplash.Controls.Add(this.ButtonSplashFont);
             this.GroupBoxSplash.Controls.Add(this.LabelSplashExample);
             this.GroupBoxSplash.Location = new System.Drawing.Point(11, 161);
             this.GroupBoxSplash.Name = "GroupBoxSplash";
-            this.GroupBoxSplash.Size = new System.Drawing.Size(283, 99);
+            this.GroupBoxSplash.Size = new System.Drawing.Size(304, 129);
             this.GroupBoxSplash.TabIndex = 16;
             this.GroupBoxSplash.TabStop = false;
             this.GroupBoxSplash.Text = "Splash screen options";
             // 
             // ButtonSplashBackColor
             // 
+            this.ButtonSplashBackColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonSplashBackColor.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonSplashBackColor.Location = new System.Drawing.Point(171, 60);
+            this.ButtonSplashBackColor.Location = new System.Drawing.Point(192, 60);
             this.ButtonSplashBackColor.Name = "ButtonSplashBackColor";
             this.ButtonSplashBackColor.Size = new System.Drawing.Size(90, 23);
             this.ButtonSplashBackColor.TabIndex = 10;
@@ -379,8 +407,9 @@
             // 
             // ButtonSplashFont
             // 
+            this.ButtonSplashFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonSplashFont.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonSplashFont.Location = new System.Drawing.Point(171, 31);
+            this.ButtonSplashFont.Location = new System.Drawing.Point(192, 31);
             this.ButtonSplashFont.Name = "ButtonSplashFont";
             this.ButtonSplashFont.Size = new System.Drawing.Size(90, 23);
             this.ButtonSplashFont.TabIndex = 9;
@@ -390,12 +419,15 @@
             // 
             // LabelSplashExample
             // 
+            this.LabelSplashExample.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelSplashExample.BackColor = System.Drawing.Color.Orange;
             this.LabelSplashExample.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LabelSplashExample.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelSplashExample.Location = new System.Drawing.Point(21, 31);
             this.LabelSplashExample.Name = "LabelSplashExample";
-            this.LabelSplashExample.Size = new System.Drawing.Size(132, 52);
+            this.LabelSplashExample.Size = new System.Drawing.Size(153, 52);
             this.LabelSplashExample.TabIndex = 0;
             this.LabelSplashExample.Text = "Example";
             this.LabelSplashExample.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -409,13 +441,15 @@
             this.TabPageDefaults.Location = new System.Drawing.Point(4, 22);
             this.TabPageDefaults.Name = "TabPageDefaults";
             this.TabPageDefaults.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageDefaults.Size = new System.Drawing.Size(307, 284);
+            this.TabPageDefaults.Size = new System.Drawing.Size(328, 313);
             this.TabPageDefaults.TabIndex = 2;
             this.TabPageDefaults.Text = "Default Timers";
             this.TabPageDefaults.UseVisualStyleBackColor = true;
             // 
             // GroupBoxDefaults
             // 
+            this.GroupBoxDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBoxDefaults.Controls.Add(this.NumericReminderPost);
             this.GroupBoxDefaults.Controls.Add(this.label2);
             this.GroupBoxDefaults.Controls.Add(this.label3);
@@ -427,7 +461,7 @@
             this.GroupBoxDefaults.Controls.Add(this.LabelReminderIntervalMinutes);
             this.GroupBoxDefaults.Location = new System.Drawing.Point(11, 69);
             this.GroupBoxDefaults.Name = "GroupBoxDefaults";
-            this.GroupBoxDefaults.Size = new System.Drawing.Size(283, 117);
+            this.GroupBoxDefaults.Size = new System.Drawing.Size(304, 117);
             this.GroupBoxDefaults.TabIndex = 16;
             this.GroupBoxDefaults.TabStop = false;
             this.GroupBoxDefaults.Text = "Default Reminder Timers";
@@ -436,7 +470,7 @@
             // 
             this.NumericReminderPost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.NumericReminderPost.Location = new System.Drawing.Point(111, 84);
+            this.NumericReminderPost.Location = new System.Drawing.Point(117, 84);
             this.NumericReminderPost.Maximum = new decimal(new int[] {
             600,
             0,
@@ -448,8 +482,9 @@
             0,
             0});
             this.NumericReminderPost.Name = "NumericReminderPost";
-            this.NumericReminderPost.Size = new System.Drawing.Size(93, 21);
+            this.NumericReminderPost.Size = new System.Drawing.Size(99, 21);
             this.NumericReminderPost.TabIndex = 33;
+            this.NumericReminderPost.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.NumericReminderPost.Value = new decimal(new int[] {
             5,
             0,
@@ -468,7 +503,7 @@
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Location = new System.Drawing.Point(209, 86);
+            this.label3.Location = new System.Drawing.Point(230, 86);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 13);
@@ -479,7 +514,7 @@
             // 
             this.NumericReminderPre.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.NumericReminderPre.Location = new System.Drawing.Point(111, 23);
+            this.NumericReminderPre.Location = new System.Drawing.Point(117, 23);
             this.NumericReminderPre.Maximum = new decimal(new int[] {
             600,
             0,
@@ -491,8 +526,9 @@
             0,
             0});
             this.NumericReminderPre.Name = "NumericReminderPre";
-            this.NumericReminderPre.Size = new System.Drawing.Size(93, 21);
+            this.NumericReminderPre.Size = new System.Drawing.Size(99, 21);
             this.NumericReminderPre.TabIndex = 27;
+            this.NumericReminderPre.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.NumericReminderPre.Value = new decimal(new int[] {
             10,
             0,
@@ -520,7 +556,7 @@
             // LabelReminderDurationSeconds
             // 
             this.LabelReminderDurationSeconds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.LabelReminderDurationSeconds.Location = new System.Drawing.Point(209, 56);
+            this.LabelReminderDurationSeconds.Location = new System.Drawing.Point(230, 56);
             this.LabelReminderDurationSeconds.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LabelReminderDurationSeconds.Name = "LabelReminderDurationSeconds";
             this.LabelReminderDurationSeconds.Size = new System.Drawing.Size(58, 13);
@@ -536,7 +572,7 @@
             0,
             0,
             0});
-            this.NumericReminderDuration.Location = new System.Drawing.Point(111, 54);
+            this.NumericReminderDuration.Location = new System.Drawing.Point(117, 54);
             this.NumericReminderDuration.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -548,8 +584,9 @@
             0,
             0});
             this.NumericReminderDuration.Name = "NumericReminderDuration";
-            this.NumericReminderDuration.Size = new System.Drawing.Size(93, 21);
+            this.NumericReminderDuration.Size = new System.Drawing.Size(99, 21);
             this.NumericReminderDuration.TabIndex = 30;
+            this.NumericReminderDuration.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.NumericReminderDuration.Value = new decimal(new int[] {
             30,
             0,
@@ -559,7 +596,7 @@
             // LabelReminderIntervalMinutes
             // 
             this.LabelReminderIntervalMinutes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.LabelReminderIntervalMinutes.Location = new System.Drawing.Point(209, 25);
+            this.LabelReminderIntervalMinutes.Location = new System.Drawing.Point(230, 25);
             this.LabelReminderIntervalMinutes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LabelReminderIntervalMinutes.Name = "LabelReminderIntervalMinutes";
             this.LabelReminderIntervalMinutes.Size = new System.Drawing.Size(57, 13);
@@ -568,9 +605,11 @@
             // 
             // LabelDefaults
             // 
+            this.LabelDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelDefaults.Location = new System.Drawing.Point(65, 13);
             this.LabelDefaults.Name = "LabelDefaults";
-            this.LabelDefaults.Size = new System.Drawing.Size(229, 48);
+            this.LabelDefaults.Size = new System.Drawing.Size(250, 48);
             this.LabelDefaults.TabIndex = 15;
             this.LabelDefaults.Text = "When creating a new activity in the activity list, these settings will be use as " +
     "defaults.";
@@ -663,9 +702,9 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Controls.Add(this.GroupBoxSystem);
+            this.tabPage1.Controls.Add(this.LabelSystem);
+            this.tabPage1.Controls.Add(this.PictureBoxSystem);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -674,42 +713,79 @@
             this.tabPage1.Text = "System";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // LabelSystem
             // 
-            this.label1.Location = new System.Drawing.Point(65, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(229, 48);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "Fitness Reminder can be set to start automatically when you logon.";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LabelSystem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LabelSystem.Location = new System.Drawing.Point(65, 13);
+            this.LabelSystem.Name = "LabelSystem";
+            this.LabelSystem.Size = new System.Drawing.Size(229, 48);
+            this.LabelSystem.TabIndex = 17;
+            this.LabelSystem.Text = "Fitness Reminder can be set to start automatically when you logon.";
+            this.LabelSystem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pictureBox1
+            // PictureBoxSystem
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(11, 13);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox1.TabIndex = 16;
-            this.pictureBox1.TabStop = false;
+            this.PictureBoxSystem.Image = ((System.Drawing.Image)(resources.GetObject("PictureBoxSystem.Image")));
+            this.PictureBoxSystem.Location = new System.Drawing.Point(11, 13);
+            this.PictureBoxSystem.Name = "PictureBoxSystem";
+            this.PictureBoxSystem.Size = new System.Drawing.Size(48, 48);
+            this.PictureBoxSystem.TabIndex = 16;
+            this.PictureBoxSystem.TabStop = false;
             // 
             // CheckBoxWindowsStart
             // 
-            this.CheckBoxWindowsStart.Location = new System.Drawing.Point(13, 23);
+            this.CheckBoxWindowsStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBoxWindowsStart.Location = new System.Drawing.Point(16, 23);
             this.CheckBoxWindowsStart.Name = "CheckBoxWindowsStart";
-            this.CheckBoxWindowsStart.Size = new System.Drawing.Size(256, 17);
+            this.CheckBoxWindowsStart.Size = new System.Drawing.Size(250, 17);
             this.CheckBoxWindowsStart.TabIndex = 18;
-            this.CheckBoxWindowsStart.Text = "Automatically start at logon";
+            this.CheckBoxWindowsStart.Text = "Automatically start during Windows logon";
             this.CheckBoxWindowsStart.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // GroupBoxSystem
             // 
-            this.groupBox1.Controls.Add(this.CheckBoxWindowsStart);
-            this.groupBox1.Location = new System.Drawing.Point(11, 69);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(283, 117);
-            this.groupBox1.TabIndex = 19;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "System settings";
+            this.GroupBoxSystem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GroupBoxSystem.Controls.Add(this.CheckBoxWindowsStart);
+            this.GroupBoxSystem.Location = new System.Drawing.Point(11, 69);
+            this.GroupBoxSystem.Name = "GroupBoxSystem";
+            this.GroupBoxSystem.Size = new System.Drawing.Size(283, 117);
+            this.GroupBoxSystem.TabIndex = 19;
+            this.GroupBoxSystem.TabStop = false;
+            this.GroupBoxSystem.Text = "System settings";
+            // 
+            // CheckBoxSound
+            // 
+            this.CheckBoxSound.Location = new System.Drawing.Point(21, 96);
+            this.CheckBoxSound.Name = "CheckBoxSound";
+            this.CheckBoxSound.Size = new System.Drawing.Size(82, 17);
+            this.CheckBoxSound.TabIndex = 11;
+            this.CheckBoxSound.Text = "Play sound";
+            this.CheckBoxSound.UseVisualStyleBackColor = true;
+            this.CheckBoxSound.CheckedChanged += new System.EventHandler(this.CheckBoxSound_CheckedChanged);
+            // 
+            // ButtonBrowseSound
+            // 
+            this.ButtonBrowseSound.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ButtonBrowseSound.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.ButtonBrowseSound.Enabled = false;
+            this.ButtonBrowseSound.Location = new System.Drawing.Point(192, 91);
+            this.ButtonBrowseSound.Name = "ButtonBrowseSound";
+            this.ButtonBrowseSound.Size = new System.Drawing.Size(90, 23);
+            this.ButtonBrowseSound.TabIndex = 12;
+            this.ButtonBrowseSound.Text = "&Browse";
+            this.ButtonBrowseSound.UseVisualStyleBackColor = true;
+            this.ButtonBrowseSound.Click += new System.EventHandler(this.ButtonBrowseSound_Click);
+            // 
+            // LabelSound
+            // 
+            this.LabelSound.Location = new System.Drawing.Point(109, 95);
+            this.LabelSound.Name = "LabelSound";
+            this.LabelSound.Size = new System.Drawing.Size(77, 17);
+            this.LabelSound.TabIndex = 13;
+            this.LabelSound.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // FormSettings
             // 
@@ -717,7 +793,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.ButtonCancel;
-            this.ClientSize = new System.Drawing.Size(337, 362);
+            this.ClientSize = new System.Drawing.Size(358, 391);
             this.Controls.Add(this.TabControlSettings);
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.ButtonOK);
@@ -752,8 +828,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxDefaults)).EndInit();
             this.ContextMenuStripNotify.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxSystem)).EndInit();
+            this.GroupBoxSystem.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -812,10 +888,14 @@
         private System.Windows.Forms.FontDialog FontDialogSplash;
         private System.Windows.Forms.ColorDialog ColorDialogSplash;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox GroupBoxSystem;
         private System.Windows.Forms.CheckBox CheckBoxWindowsStart;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label LabelSystem;
+        private System.Windows.Forms.PictureBox PictureBoxSystem;
+        private System.Windows.Forms.Button ButtonBrowseSound;
+        private System.Windows.Forms.CheckBox CheckBoxSound;
+        private System.Windows.Forms.OpenFileDialog OpenFileDialogSound;
+        private System.Windows.Forms.Label LabelSound;
     }
 }
 
