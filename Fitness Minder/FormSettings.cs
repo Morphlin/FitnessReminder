@@ -244,6 +244,11 @@ namespace Fitness_Minder
             RemindForm.ShowIt("This is a test!", LabelSplashExample.Font, LabelSplashExample.BackColor, true);
         }
 
+        private void LabelSound_Click(object sender, EventArgs e)
+        {
+            if (MediaPlayer!= null ) MediaPlayer.Play();
+        }
+
         private void ButtonSplashFont_Click(object sender, EventArgs e)
         {
             FontDialogSplash.Font = LabelSplashExample.Font;

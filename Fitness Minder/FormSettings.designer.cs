@@ -37,7 +37,7 @@
             this.ToolStripContainerActivity = new System.Windows.Forms.ToolStripContainer();
             this.ToolStripActivity = new System.Windows.Forms.ToolStrip();
             this.ToolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.ToolStripButtonEdit = new System.Windows.Forms.ToolStripButton();
             this.ToolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripButtonUp = new System.Windows.Forms.ToolStripButton();
@@ -206,14 +206,14 @@
             this.ToolStripActivity.Dock = System.Windows.Forms.DockStyle.None;
             this.ToolStripActivity.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripButtonAdd,
-            this.toolStripButton1,
+            this.ToolStripButtonEdit,
             this.ToolStripButtonDelete,
             this.toolStripSeparator2,
             this.ToolStripButtonUp,
             this.ToolStripButtonDown});
             this.ToolStripActivity.Location = new System.Drawing.Point(3, 0);
             this.ToolStripActivity.Name = "ToolStripActivity";
-            this.ToolStripActivity.Size = new System.Drawing.Size(133, 25);
+            this.ToolStripActivity.Size = new System.Drawing.Size(164, 25);
             this.ToolStripActivity.TabIndex = 0;
             // 
             // ToolStripButtonAdd
@@ -226,15 +226,15 @@
             this.ToolStripButtonAdd.Text = "toolStripButton1";
             this.ToolStripButtonAdd.Click += new System.EventHandler(this.ToolStripButtonAdd_Click);
             // 
-            // toolStripButton1
+            // ToolStripButtonEdit
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Enabled = false;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.ToolStripButtonEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ToolStripButtonEdit.Enabled = false;
+            this.ToolStripButtonEdit.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripButtonEdit.Image")));
+            this.ToolStripButtonEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ToolStripButtonEdit.Name = "ToolStripButtonEdit";
+            this.ToolStripButtonEdit.Size = new System.Drawing.Size(23, 22);
+            this.ToolStripButtonEdit.Text = "toolStripButton1";
             // 
             // ToolStripButtonDelete
             // 
@@ -416,6 +416,7 @@
             this.LabelSound.Size = new System.Drawing.Size(83, 17);
             this.LabelSound.TabIndex = 13;
             this.LabelSound.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LabelSound.Click += new System.EventHandler(this.LabelSound_Click);
             // 
             // ButtonBrowseSound
             // 
@@ -901,7 +902,7 @@
         private System.Windows.Forms.GroupBox GroupBoxDisplay;
         private System.Windows.Forms.RadioButton RadioButtonSplash;
         private System.Windows.Forms.RadioButton RadioButtonBalloon;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton ToolStripButtonEdit;
         private System.Windows.Forms.ImageList ImageListActivity;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
