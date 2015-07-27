@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FitnessReminder</RootNamespace>
-    <AssemblyName>FitnessReminder</AssemblyName>
+    <AssemblyName>Fitness Reminder</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -42,7 +42,7 @@
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\FitnessReminder.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Fitness Reminder.xml</DocumentationFile>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -55,7 +55,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>FitnessReminder.ico</ApplicationIcon>
+    <ApplicationIcon>Fitness Reminder.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>FitnessReminder.Program</StartupObject>
@@ -76,7 +76,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>FitnessReminder.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Fitness Reminder.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestTimestampUrl>http://timestamp.verisign.com/scripts/timstamp.dll</ManifestTimestampUrl>
@@ -131,7 +131,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="FitnessReminder.pfx" />
+    <None Include="Fitness Reminder.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -147,7 +147,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="FitnessReminder.ico" />
+    <Content Include="Fitness Reminder.ico" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

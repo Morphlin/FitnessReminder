@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Reminder to workout every now and then when working on the computer.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Garnote-Technologies")]
-[assembly: AssemblyProduct("FitnessReminder")]
+[assembly: AssemblyProduct("Fitness Reminder")]
 [assembly: AssemblyCopyright("Copyright © Gartech 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
