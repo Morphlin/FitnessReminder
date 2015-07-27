@@ -149,6 +149,7 @@ namespace FitnessReminder
         private void HideIt()
         {
             pauseToolStripMenuItem.Enabled = true;
+            TimerEnabled = true;
             ListViewActivity.Items.Clear();
             Hide();
         }
@@ -360,7 +361,6 @@ namespace FitnessReminder
 
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
-            ListViewActivity.Items.Clear();
             if (InitialStart)
             {
                 CanExit = true;
