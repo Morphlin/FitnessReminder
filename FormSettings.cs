@@ -13,6 +13,10 @@ namespace FitnessReminder
         /// <summary>
         /// 
         /// </summary>
+        private bool _AutoStart;
+        /// <summary>
+        /// 
+        /// </summary>
         private bool InitialStart = true;
         /// <summary>
         /// 
@@ -32,10 +36,22 @@ namespace FitnessReminder
         /// 
         /// </summary>
         private Activity.ActivityList Activities;
+        /// <summary>
+        /// 
+        /// </summary>
         private List<FormRemind> RemindForm = new List<FormRemind>();
+        /// <summary>
+        /// 
+        /// </summary>
         private System.Media.SoundPlayer MediaPlayer;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private const string AutoStartKey = "Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+        /// <summary>
+        /// 
+        /// </summary>
         private bool AutoStartAtLogon
         {
             get
@@ -73,11 +89,21 @@ namespace FitnessReminder
             }
         }
 
-        internal FormSettings()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="AutoStart"></param>
+        internal FormSettings(bool AutoStart)
         {
+            _AutoStart = AutoStart;
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FormSettings_Load(object sender, EventArgs e)
         {
             RegSettings = new RegistrySettings();
@@ -129,6 +155,21 @@ namespace FitnessReminder
             CheckBoxWindowsStart.Checked = AutoStartAtLogon;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FormSettings_Shown(object sender, EventArgs e)
+        {
+            if (_AutoStart) ButtonOK_Click(sender, e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FormSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!CanExit)
@@ -138,33 +179,56 @@ namespace FitnessReminder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void ShowIt()
         {
+            PauseIt();
+            resumeToolStripMenuItem.Enabled = false;
             pauseToolStripMenuItem.Enabled = false;
-            TimerEnabled = false;
             ListViewActivity.Items.AddRange(Activities.ToLviRange());
             Show();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void HideIt()
         {
+            ResumeIt();
+            resumeToolStripMenuItem.Enabled = true;
             pauseToolStripMenuItem.Enabled = true;
-            TimerEnabled = true;
             ListViewActivity.Items.Clear();
             Hide();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FitnessNotifyIcon_DoubleClick(object sender, EventArgs e)
         {
             ShowIt();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripButtonAdd_Click(object sender, EventArgs e)
         {
             var ItemForm = new FormItem();
             ItemForm.ShowIt(ListViewActivity, Convert.ToInt32(NumericReminderPre.Value) * 60, Convert.ToInt32(NumericReminderDuration.Value), Convert.ToInt32(NumericReminderPost.Value) * 60);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripButtonEdit_Click(object sender, EventArgs e)
         {
             if (ListViewActivity.SelectedItems.Count > 0)
@@ -174,6 +238,11 @@ namespace FitnessReminder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripButtonUp_Click(object sender, EventArgs e)
         {
             if (ListViewActivity.SelectedItems.Count > 0)
@@ -188,6 +257,11 @@ namespace FitnessReminder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripButtonDown_Click(object sender, EventArgs e)
         {
             if (ListViewActivity.SelectedItems.Count > 0)
@@ -202,6 +276,11 @@ namespace FitnessReminder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (ListViewActivity.SelectedItems.Count > 0)
@@ -210,6 +289,11 @@ namespace FitnessReminder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListViewActivity_SelectedIndexChanged(object sender, EventArgs e)
         {
             ToolStripButtonEdit.Enabled = (ListViewActivity.SelectedItems.Count > 0);
@@ -218,16 +302,33 @@ namespace FitnessReminder
             ToolStripButtonDelete.Enabled = (ListViewActivity.SelectedItems.Count > 0);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RadioButtonBalloon_CheckedChanged(object sender, EventArgs e)
         {
             GroupBoxSplash.Visible = RadioButtonSplash.Checked;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RadioButtonSplash_CheckedChanged(object sender, EventArgs e)
         {
             GroupBoxSplash.Visible = RadioButtonSplash.Checked;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ActivityName"></param>
+        /// <param name="Font"></param>
+        /// <param name="BackColor"></param>
+        /// <param name="Example"></param>
         private void SplashShow(string ActivityName, System.Drawing.Font Font, System.Drawing.Color BackColor, bool Example = false)
         {
             foreach (var Scr in Screen.AllScreens)
@@ -238,6 +339,9 @@ namespace FitnessReminder
                 RemindFormAdd.ShowIt(ActivityName, Font, BackColor, Example);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         private void SplashHide()
         {
             foreach (var Form in RemindForm)
@@ -246,16 +350,31 @@ namespace FitnessReminder
             }
             RemindForm.Clear();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LabelSplashExample_Click(object sender, EventArgs e)
         {
             SplashShow("This is a test!", LabelSplashExample.Font, LabelSplashExample.BackColor, true);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LabelSound_Click(object sender, EventArgs e)
         {
             if (MediaPlayer!= null ) MediaPlayer.Play();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonSplashFont_Click(object sender, EventArgs e)
         {
             FontDialogSplash.Font = LabelSplashExample.Font;
@@ -265,6 +384,11 @@ namespace FitnessReminder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonSplashBackColor_Click(object sender, EventArgs e)
         {
             ColorDialogSplash.Color = LabelSplashExample.BackColor;
@@ -274,11 +398,21 @@ namespace FitnessReminder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckBoxSound_CheckedChanged(object sender, EventArgs e)
         {
             ButtonBrowseSound.Enabled = CheckBoxSound.Checked;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonBrowseSound_Click(object sender, EventArgs e)
         {
             if (MediaPlayer != null) OpenFileDialogSound.FileName = MediaPlayer.SoundLocation;
@@ -293,6 +427,11 @@ namespace FitnessReminder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonResetSettings_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("App must close to take effect.", "Fitness Reminder", MessageBoxButtons.OKCancel) == DialogResult.OK)
@@ -312,6 +451,11 @@ namespace FitnessReminder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonOK_Click(object sender, EventArgs e)
         {
             SplashHide();
@@ -355,10 +499,15 @@ namespace FitnessReminder
                 InitialStart = false;
                 ButtonOK.Text = "&Save and resume";
             }
-            TimerEnabled = true;
+            ResumeIt();
             Close();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
             if (InitialStart)
@@ -368,29 +517,70 @@ namespace FitnessReminder
             Close();
         }
 
-        private void openSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowIt();
-        }
-        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TimerEnabled = false;
-            resumeToolStripMenuItem.Visible = true;
-            pauseToolStripMenuItem.Visible = false;
-        }
-        private void resumeToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ResumeIt()
         {
             TimerEnabled = true;
             resumeToolStripMenuItem.Visible = false;
             pauseToolStripMenuItem.Visible = true;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        private void PauseIt()
+        {
+            TimerEnabled = false;
+            resumeToolStripMenuItem.Visible = true;
+            pauseToolStripMenuItem.Visible = false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowIt();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PauseIt();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void resumeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResumeIt();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanExit = true;
             Close();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private int CurrentActivity = 0;
+        /// <summary>
+        /// 
+        /// </summary>
         private void CurrentActivityIncrement()
         {
             CurrentActivity++;
@@ -404,8 +594,19 @@ namespace FitnessReminder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private int FitnessTimerTick = 0;
+        /// <summary>
+        /// 
+        /// </summary>
         private int FitnessTimerStep = 1;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FitnessTimer_Tick(object sender, EventArgs e)
         {
             if (TimerEnabled)
@@ -473,11 +674,22 @@ namespace FitnessReminder
         [Serializable]
         internal class ActivityList : IEnumerable<ActivityItem>
         {
+            /// <summary>
+            /// 
+            /// </summary>
             private List<ActivityItem> _Activities;
+            /// <summary>
+            /// 
+            /// </summary>
             internal ActivityList()
             {
                 _Activities = new List<ActivityItem>();
             }
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="Index"></param>
+            /// <returns></returns>
             internal ActivityItem this[int Index]
             {
                 get
@@ -485,6 +697,9 @@ namespace FitnessReminder
                     return _Activities[Index];
                 }
             }
+            /// <summary>
+            /// 
+            /// </summary>
             internal int Count
             {
                 get
@@ -492,14 +707,29 @@ namespace FitnessReminder
                     return _Activities.Count;
                 }
             }
+            /// <summary>
+            /// 
+            /// </summary>
             internal void Clear()
             {
                 _Activities.Clear();
             }
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="Name"></param>
+            /// <param name="Enable"></param>
+            /// <param name="DelayPre"></param>
+            /// <param name="Duration"></param>
+            /// <param name="DelayPost"></param>
             internal void Add(string Name, bool Enable, int DelayPre, int Duration, int DelayPost)
             {
                 _Activities.Add(new ActivityItem(Name, Enable, DelayPre, Duration, DelayPost));
             }
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="LVIs"></param>
             internal void AddLviRange(ListView.ListViewItemCollection LVIs)
             {
                 foreach (ListViewItem LVI in LVIs)
@@ -508,6 +738,10 @@ namespace FitnessReminder
                         Convert.ToInt32(LVI.SubItems[2].Text), Convert.ToInt32(LVI.SubItems[3].Text)));
                 }
             }
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
             internal ListViewItem[] ToLviRange()
             {
                 var LVIs = new List<ListViewItem>();
@@ -522,10 +756,18 @@ namespace FitnessReminder
                 }
                 return LVIs.ToArray();
             }
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
             public IEnumerator<ActivityItem> GetEnumerator()
             {
                 return _Activities.GetEnumerator();
             }
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return _Activities.GetEnumerator();
@@ -537,32 +779,70 @@ namespace FitnessReminder
         [Serializable]
         internal class ActivityItem
         {
+            /// <summary>
+            /// 
+            /// </summary>
             private string _Name;
+            /// <summary>
+            /// 
+            /// </summary>
             internal string Name
             {
                 get { return _Name; }
             }
+            /// <summary>
+            /// 
+            /// </summary>
             private bool _Enable;
+            /// <summary>
+            /// 
+            /// </summary>
             internal bool Enable
             {
                 get { return _Enable; }
                 set { _Enable = value; }
             }
+            /// <summary>
+            /// 
+            /// </summary>
             private int _DelayPre;
+            /// <summary>
+            /// 
+            /// </summary>
             internal int DelayPre
             {
                 get { return _DelayPre; }
             }
+            /// <summary>
+            /// 
+            /// </summary>
             private int _Duration;
+            /// <summary>
+            /// 
+            /// </summary>
             internal int Duration
             {
                 get { return _Duration; }
             }
+            /// <summary>
+            /// 
+            /// </summary>
             private int _DelayPost;
+            /// <summary>
+            /// 
+            /// </summary>
             internal int DelayPost
             {
                 get { return _DelayPost; }
             }
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="Name"></param>
+            /// <param name="Enable"></param>
+            /// <param name="DelayPre"></param>
+            /// <param name="Duration"></param>
+            /// <param name="DelayPost"></param>
             internal ActivityItem(string Name, bool Enable, int DelayPre, int Duration, int DelayPost)
             {
                 _Name = Name;
@@ -696,8 +976,7 @@ namespace FitnessReminder
                 MessageBox.Show(Ex.Message);
             }
         }
-
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -737,7 +1016,6 @@ namespace FitnessReminder
                 MessageBox.Show(Ex.Message);
             }
         }
-
 
         /// <summary>
         /// 
@@ -779,7 +1057,6 @@ namespace FitnessReminder
             }
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -820,12 +1097,10 @@ namespace FitnessReminder
             }
         }
 
-
         /// <summary>
         /// 
         /// </summary>
         private const string DisplayTypeName = "DisplayType";
-
         /// <summary>
         /// 
         /// </summary>
@@ -846,7 +1121,6 @@ namespace FitnessReminder
             }
             return 1; //Default Bottom Value
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -1006,7 +1280,6 @@ namespace FitnessReminder
         /// 
         /// </summary>
         private const string DisplaySoundFileName = "DisplaySoundFile";
-
         /// <summary>
         /// 
         /// </summary>
@@ -1031,7 +1304,6 @@ namespace FitnessReminder
             }
             return null; //Default Value
         }
-
         /// <summary>
         /// 
         /// </summary>

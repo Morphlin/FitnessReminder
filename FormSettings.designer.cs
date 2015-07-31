@@ -842,6 +842,7 @@
             this.Text = "Fitness Reminder";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSettings_FormClosing);
             this.Load += new System.EventHandler(this.FormSettings_Load);
+            this.Shown += new System.EventHandler(this.FormSettings_Shown);
             this.TabControlSettings.ResumeLayout(false);
             this.TabPageActivity.ResumeLayout(false);
             this.ToolStripContainerActivity.BottomToolStripPanel.ResumeLayout(false);
