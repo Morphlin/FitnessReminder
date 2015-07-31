@@ -75,7 +75,7 @@ namespace FitnessReminder
                     var AutoStartRegistry = Registry.CurrentUser.OpenSubKey(AutoStartKey, true);
                     if (value)
                     {
-                        AutoStartRegistry.SetValue("Fitness Reminder", Application.ExecutablePath, RegistryValueKind.String);
+                        AutoStartRegistry.SetValue("Fitness Reminder", Application.ExecutablePath + " /auto", RegistryValueKind.String);
                     }
                     else
                     {
