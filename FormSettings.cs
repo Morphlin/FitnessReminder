@@ -75,7 +75,7 @@ namespace FitnessReminder
                     var AutoStartRegistry = Registry.CurrentUser.OpenSubKey(AutoStartKey, true);
                     if (value)
                     {
-                        AutoStartRegistry.SetValue("Fitness Reminder", Application.ExecutablePath + " /auto", RegistryValueKind.String);
+                        AutoStartRegistry.SetValue("Fitness Reminder", "\"" + Application.ExecutablePath + "\" /auto", RegistryValueKind.String);
                     }
                     else
                     {
@@ -525,6 +525,7 @@ namespace FitnessReminder
             TimerEnabled = true;
             resumeToolStripMenuItem.Visible = false;
             pauseToolStripMenuItem.Visible = true;
+            SplashHide();
         }
         /// <summary>
         /// 
@@ -534,6 +535,7 @@ namespace FitnessReminder
             TimerEnabled = false;
             resumeToolStripMenuItem.Visible = true;
             pauseToolStripMenuItem.Visible = false;
+            SplashHide();
         }
 
         /// <summary>
