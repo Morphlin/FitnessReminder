@@ -162,6 +162,7 @@ namespace FitnessReminder
         /// <param name="e"></param>
         private void FormSettings_Shown(object sender, EventArgs e)
         {
+            try { SystemEvents.SessionSwitch += SystemEvents_SessionSwitch; } catch { }
             if (_AutoStart) ButtonOK_Click(sender, e);
         }
 
@@ -177,6 +178,7 @@ namespace FitnessReminder
                 HideIt();
                 e.Cancel = true;
             }
+            try { SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch; } catch { }
         }
 
         /// <summary>
@@ -661,6 +663,33 @@ namespace FitnessReminder
             else
             {
                 FitnessNotifyIcon.Text = "Fitness Reminder - Timer paused";
+            }
+        }
+
+        /// <summary>
+        /// Workstation unlock/lock event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            switch (e.Reason)
+            {
+                case SessionSwitchReason.SessionLogon:
+                    //Nothing to go here.
+                    break;
+                case SessionSwitchReason.SessionUnlock:
+                    //Unpause when workstation is unlocked.
+                    ResumeIt();
+                    break;
+                case SessionSwitchReason.SessionLock:
+                    //Pause when workstation is locked.
+                    PauseIt();
+                    break;
+                case SessionSwitchReason.SessionLogoff:
+                    //Allows to exit to not interfered with logoff.
+                    CanExit = true;
+                    break;
             }
         }
     }

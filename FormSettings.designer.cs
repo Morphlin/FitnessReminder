@@ -92,6 +92,7 @@
             this.FontDialogSplash = new System.Windows.Forms.FontDialog();
             this.ColorDialogSplash = new System.Windows.Forms.ColorDialog();
             this.OpenFileDialogSound = new System.Windows.Forms.OpenFileDialog();
+            this.HelpProviderSettings = new System.Windows.Forms.HelpProvider();
             this.TabControlSettings.SuspendLayout();
             this.TabPageActivity.SuspendLayout();
             this.ToolStripContainerActivity.BottomToolStripPanel.SuspendLayout();
@@ -834,6 +835,7 @@
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.ButtonOK);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -936,6 +938,7 @@
         private System.Windows.Forms.Label LabelSound;
         private System.Windows.Forms.Button ButtonResetSettings;
         private System.Windows.Forms.GroupBox GroupBoxApplicationSettings;
+        private System.Windows.Forms.HelpProvider HelpProviderSettings;
     }
 }
 
