@@ -178,7 +178,10 @@ namespace FitnessReminder
                 HideIt();
                 e.Cancel = true;
             }
-            try { SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch; } catch { }
+            else
+            {
+                try { SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch; } catch { }
+            }
         }
 
         /// <summary>
@@ -619,7 +622,7 @@ namespace FitnessReminder
                 switch (FitnessTimerStep)
                 {
                     case 1: //Activity Pre-Delay
-                        FitnessNotifyIcon.Text = "Fitness Reminder - Countdown [" + (((decimal)Activities[CurrentActivity].DelayPre - FitnessTimerTick)) + "s]";
+                        FitnessNotifyIcon.Text = "Fitness Reminder - " + Activities[CurrentActivity].Name + " [" + (((decimal)Activities[CurrentActivity].DelayPre - FitnessTimerTick)) + "s]";
                         if (FitnessTimerTick >= Activities[CurrentActivity].DelayPre)
                         {
                             FitnessTimerStep = 2;
@@ -636,7 +639,7 @@ namespace FitnessReminder
                         }
                         break;
                     case 2: //Activity Reminder Duration
-                        FitnessNotifyIcon.Text = "Fitness Reminder - Activity! [" + (((decimal)Activities[CurrentActivity].Duration - FitnessTimerTick)) + "s]";
+                        FitnessNotifyIcon.Text = "Fitness Reminder - " + Activities[CurrentActivity].Name + "! [" + (((decimal)Activities[CurrentActivity].Duration - FitnessTimerTick)) + "s]";
                         if (FitnessTimerTick >= Activities[CurrentActivity].Duration)
                         {
                             FitnessTimerStep = 3;

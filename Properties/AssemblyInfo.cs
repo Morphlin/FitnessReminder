@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Garnote-Technologies")]
 [assembly: AssemblyProduct("Fitness Reminder")]
-[assembly: AssemblyCopyright("Copyright © Gartech 2014")]
+[assembly: AssemblyCopyright("Copyright © Gartech 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

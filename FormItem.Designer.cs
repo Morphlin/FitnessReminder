@@ -76,6 +76,7 @@
             this.TextBoxActivityName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxActivityName.Location = new System.Drawing.Point(115, 67);
+            this.TextBoxActivityName.MaxLength = 50;
             this.TextBoxActivityName.Name = "TextBoxActivityName";
             this.TextBoxActivityName.Size = new System.Drawing.Size(138, 21);
             this.TextBoxActivityName.TabIndex = 15;
