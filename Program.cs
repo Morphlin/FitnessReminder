@@ -1,15 +1,18 @@
 ﻿using System;
 using System.IO;
-using System.Diagnostics;
 using System.Reflection;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace FitnessReminder
 {
+    /// <summary>
+    /// Main entry point class for the application.
+    /// </summary>
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// Main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main(string[] Args)

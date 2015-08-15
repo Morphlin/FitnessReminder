@@ -58,8 +58,8 @@
             this.LabelActivity.Name = "LabelActivity";
             this.LabelActivity.Size = new System.Drawing.Size(220, 48);
             this.LabelActivity.TabIndex = 13;
-            this.LabelActivity.Text = "List of activites that the reminder will display. Diplayed in order from top to b" +
-    "ottom. Unchecked items will be skipped.";
+            this.LabelActivity.Text = "Choose a name for the activity. Maximum length is 50 chars. Select a pre-delay an" +
+    "d a duration. Post-delay is optional.";
             this.LabelActivity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBoxActivity
@@ -222,7 +222,6 @@
             // ButtonCancel
             // 
             this.ButtonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.ButtonCancel.Location = new System.Drawing.Point(154, 203);
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
@@ -234,7 +233,6 @@
             // ButtonOK
             // 
             this.ButtonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.ButtonOK.Location = new System.Drawing.Point(73, 203);
             this.ButtonOK.Name = "ButtonOK";
             this.ButtonOK.Size = new System.Drawing.Size(75, 23);
@@ -272,7 +270,8 @@
             this.Name = "FormItem";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Fitness Reminder";
+            this.Text = "Item";
+            this.Load += new System.EventHandler(this.FormItem_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxActivity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericReminderPre)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericReminderDuration)).EndInit();

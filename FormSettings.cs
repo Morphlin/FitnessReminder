@@ -226,7 +226,7 @@ namespace FitnessReminder
         private void ToolStripButtonAdd_Click(object sender, EventArgs e)
         {
             var ItemForm = new FormItem();
-            ItemForm.ShowIt(ListViewActivity, Convert.ToInt32(NumericReminderPre.Value) * 60, Convert.ToInt32(NumericReminderDuration.Value), Convert.ToInt32(NumericReminderPost.Value) * 60);
+            ItemForm.ShowIt(ListViewActivity, "Create activity", Convert.ToInt32(NumericReminderPre.Value) * 60, Convert.ToInt32(NumericReminderDuration.Value), Convert.ToInt32(NumericReminderPost.Value) * 60);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace FitnessReminder
             if (ListViewActivity.SelectedItems.Count > 0)
             {
                 var ItemForm = new FormItem();
-                ItemForm.ShowIt(ListViewActivity.SelectedItems[0]);
+                ItemForm.ShowIt(ListViewActivity.SelectedItems[0], "Edit activity");
             }
         }
 
