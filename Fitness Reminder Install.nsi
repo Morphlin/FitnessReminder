@@ -77,6 +77,7 @@ VIAddVersionKey "Comments" ""
 Section "Program"
 
 	SectionIn RO
+	ExecWait 'TaskKill /IM "Fitness Reminder.exe" /F'
 	
 	SetOverwrite on
     # set the installation directory as the destination for the following actions
