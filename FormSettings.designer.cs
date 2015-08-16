@@ -76,6 +76,7 @@
             this.GroupBoxApplicationSettings = new System.Windows.Forms.GroupBox();
             this.ButtonResetSettings = new System.Windows.Forms.Button();
             this.GroupBoxSystemSettings = new System.Windows.Forms.GroupBox();
+            this.CheckBoxWindowsStartMinimize = new System.Windows.Forms.CheckBox();
             this.CheckBoxWindowsStart = new System.Windows.Forms.CheckBox();
             this.LabelSystem = new System.Windows.Forms.Label();
             this.PictureBoxSystem = new System.Windows.Forms.PictureBox();
@@ -121,8 +122,10 @@
             // 
             this.ButtonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.HelpProviderSettings.SetHelpString(this.ButtonOK, "Saves current settings, minimizes the window and starts the reminder timer.");
             this.ButtonOK.Location = new System.Drawing.Point(150, 358);
             this.ButtonOK.Name = "ButtonOK";
+            this.HelpProviderSettings.SetShowHelp(this.ButtonOK, true);
             this.ButtonOK.Size = new System.Drawing.Size(108, 23);
             this.ButtonOK.TabIndex = 0;
             this.ButtonOK.Text = "Save && &Run";
@@ -133,8 +136,12 @@
             // 
             this.ButtonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.HelpProviderSettings.SetHelpString(this.ButtonCancel, "Closes the window. If Fitnes Reminder was previously started, it continues withou" +
+        "t saving changes. If Fitness Reminder was just started, Fitness Reminder will ex" +
+        "it.");
             this.ButtonCancel.Location = new System.Drawing.Point(264, 358);
             this.ButtonCancel.Name = "ButtonCancel";
+            this.HelpProviderSettings.SetShowHelp(this.ButtonCancel, true);
             this.ButtonCancel.Size = new System.Drawing.Size(84, 23);
             this.ButtonCancel.TabIndex = 1;
             this.ButtonCancel.Text = "&Cancel";
@@ -224,7 +231,7 @@
             this.ToolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ToolStripButtonAdd.Name = "ToolStripButtonAdd";
             this.ToolStripButtonAdd.Size = new System.Drawing.Size(23, 22);
-            this.ToolStripButtonAdd.Text = "toolStripButton1";
+            this.ToolStripButtonAdd.Text = "Add Activity.";
             this.ToolStripButtonAdd.Click += new System.EventHandler(this.ToolStripButtonAdd_Click);
             // 
             // ToolStripButtonEdit
@@ -235,7 +242,7 @@
             this.ToolStripButtonEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ToolStripButtonEdit.Name = "ToolStripButtonEdit";
             this.ToolStripButtonEdit.Size = new System.Drawing.Size(23, 22);
-            this.ToolStripButtonEdit.Text = "toolStripButton1";
+            this.ToolStripButtonEdit.Text = "Edit Activity.";
             this.ToolStripButtonEdit.Click += new System.EventHandler(this.ToolStripButtonEdit_Click);
             // 
             // ToolStripButtonDelete
@@ -246,7 +253,7 @@
             this.ToolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ToolStripButtonDelete.Name = "ToolStripButtonDelete";
             this.ToolStripButtonDelete.Size = new System.Drawing.Size(23, 22);
-            this.ToolStripButtonDelete.Text = "toolStripButton4";
+            this.ToolStripButtonDelete.Text = "Delete Activity.";
             this.ToolStripButtonDelete.Click += new System.EventHandler(this.ToolStripButtonDelete_Click);
             // 
             // toolStripSeparator2
@@ -262,7 +269,7 @@
             this.ToolStripButtonUp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ToolStripButtonUp.Name = "ToolStripButtonUp";
             this.ToolStripButtonUp.Size = new System.Drawing.Size(23, 22);
-            this.ToolStripButtonUp.Text = "toolStripButton2";
+            this.ToolStripButtonUp.Text = "Slide activity up.";
             this.ToolStripButtonUp.Click += new System.EventHandler(this.ToolStripButtonUp_Click);
             // 
             // ToolStripButtonDown
@@ -273,7 +280,7 @@
             this.ToolStripButtonDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ToolStripButtonDown.Name = "ToolStripButtonDown";
             this.ToolStripButtonDown.Size = new System.Drawing.Size(23, 22);
-            this.ToolStripButtonDown.Text = "toolStripButton3";
+            this.ToolStripButtonDown.Text = "Slide activity down.";
             this.ToolStripButtonDown.Click += new System.EventHandler(this.ToolStripButtonDown_Click);
             // 
             // ListViewActivity
@@ -372,8 +379,11 @@
             // 
             this.RadioButtonBalloon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.HelpProviderSettings.SetHelpString(this.RadioButtonBalloon, "Shows a balloon tip from the tray icon. Warning, delays may occur due to Windows." +
+        " Might even not show at all.");
             this.RadioButtonBalloon.Location = new System.Drawing.Point(21, 51);
             this.RadioButtonBalloon.Name = "RadioButtonBalloon";
+            this.HelpProviderSettings.SetShowHelp(this.RadioButtonBalloon, true);
             this.RadioButtonBalloon.Size = new System.Drawing.Size(255, 17);
             this.RadioButtonBalloon.TabIndex = 0;
             this.RadioButtonBalloon.Text = "Balloon Tip (Notification from Tray Icon)";
@@ -385,8 +395,10 @@
             this.RadioButtonSplash.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioButtonSplash.Checked = true;
+            this.HelpProviderSettings.SetHelpString(this.RadioButtonSplash, "Shows a full screen window on all screens containing the activity name.");
             this.RadioButtonSplash.Location = new System.Drawing.Point(21, 27);
             this.RadioButtonSplash.Name = "RadioButtonSplash";
+            this.HelpProviderSettings.SetShowHelp(this.RadioButtonSplash, true);
             this.RadioButtonSplash.Size = new System.Drawing.Size(255, 17);
             this.RadioButtonSplash.TabIndex = 1;
             this.RadioButtonSplash.TabStop = true;
@@ -413,8 +425,11 @@
             // 
             // LabelSound
             // 
+            this.HelpProviderSettings.SetHelpString(this.LabelSound, "Sound file name that will be played when the activity is shown. Click here to hea" +
+        "r an example.");
             this.LabelSound.Location = new System.Drawing.Point(102, 96);
             this.LabelSound.Name = "LabelSound";
+            this.HelpProviderSettings.SetShowHelp(this.LabelSound, true);
             this.LabelSound.Size = new System.Drawing.Size(83, 17);
             this.LabelSound.TabIndex = 13;
             this.LabelSound.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -435,8 +450,10 @@
             // 
             // CheckBoxSound
             // 
+            this.HelpProviderSettings.SetHelpString(this.CheckBoxSound, "Enable the playback of a sound when the activity is shown.");
             this.CheckBoxSound.Location = new System.Drawing.Point(21, 97);
             this.CheckBoxSound.Name = "CheckBoxSound";
+            this.HelpProviderSettings.SetShowHelp(this.CheckBoxSound, true);
             this.CheckBoxSound.Size = new System.Drawing.Size(82, 17);
             this.CheckBoxSound.TabIndex = 11;
             this.CheckBoxSound.Text = "Play sound";
@@ -475,8 +492,10 @@
             this.LabelSplashExample.BackColor = System.Drawing.Color.Orange;
             this.LabelSplashExample.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LabelSplashExample.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HelpProviderSettings.SetHelpString(this.LabelSplashExample, "Example of the selected visual style. Click here to see a full screen example.");
             this.LabelSplashExample.Location = new System.Drawing.Point(21, 32);
             this.LabelSplashExample.Name = "LabelSplashExample";
+            this.HelpProviderSettings.SetShowHelp(this.LabelSplashExample, true);
             this.LabelSplashExample.Size = new System.Drawing.Size(153, 52);
             this.LabelSplashExample.TabIndex = 0;
             this.LabelSplashExample.Text = "Example";
@@ -688,7 +707,7 @@
             this.GroupBoxApplicationSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBoxApplicationSettings.Controls.Add(this.ButtonResetSettings);
-            this.GroupBoxApplicationSettings.Location = new System.Drawing.Point(11, 149);
+            this.GroupBoxApplicationSettings.Location = new System.Drawing.Point(11, 180);
             this.GroupBoxApplicationSettings.Name = "GroupBoxApplicationSettings";
             this.GroupBoxApplicationSettings.Size = new System.Drawing.Size(304, 60);
             this.GroupBoxApplicationSettings.TabIndex = 20;
@@ -709,13 +728,26 @@
             // 
             this.GroupBoxSystemSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.GroupBoxSystemSettings.Controls.Add(this.CheckBoxWindowsStartMinimize);
             this.GroupBoxSystemSettings.Controls.Add(this.CheckBoxWindowsStart);
             this.GroupBoxSystemSettings.Location = new System.Drawing.Point(11, 69);
             this.GroupBoxSystemSettings.Name = "GroupBoxSystemSettings";
-            this.GroupBoxSystemSettings.Size = new System.Drawing.Size(304, 65);
+            this.GroupBoxSystemSettings.Size = new System.Drawing.Size(304, 83);
             this.GroupBoxSystemSettings.TabIndex = 19;
             this.GroupBoxSystemSettings.TabStop = false;
             this.GroupBoxSystemSettings.Text = "System settings";
+            // 
+            // CheckBoxWindowsStartMinimize
+            // 
+            this.CheckBoxWindowsStartMinimize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBoxWindowsStartMinimize.Enabled = false;
+            this.CheckBoxWindowsStartMinimize.Location = new System.Drawing.Point(32, 46);
+            this.CheckBoxWindowsStartMinimize.Name = "CheckBoxWindowsStartMinimize";
+            this.CheckBoxWindowsStartMinimize.Size = new System.Drawing.Size(255, 17);
+            this.CheckBoxWindowsStartMinimize.TabIndex = 19;
+            this.CheckBoxWindowsStartMinimize.Text = "Automatically run activities (minimized to tray).";
+            this.CheckBoxWindowsStartMinimize.UseVisualStyleBackColor = true;
             // 
             // CheckBoxWindowsStart
             // 
@@ -725,8 +757,9 @@
             this.CheckBoxWindowsStart.Name = "CheckBoxWindowsStart";
             this.CheckBoxWindowsStart.Size = new System.Drawing.Size(271, 17);
             this.CheckBoxWindowsStart.TabIndex = 18;
-            this.CheckBoxWindowsStart.Text = "Automatically start during Windows logon";
+            this.CheckBoxWindowsStart.Text = "Automatically start during Windows logon.";
             this.CheckBoxWindowsStart.UseVisualStyleBackColor = true;
+            this.CheckBoxWindowsStart.CheckedChanged += new System.EventHandler(this.CheckBoxWindowsStart_CheckedChanged);
             // 
             // LabelSystem
             // 
@@ -939,6 +972,7 @@
         private System.Windows.Forms.Button ButtonResetSettings;
         private System.Windows.Forms.GroupBox GroupBoxApplicationSettings;
         private System.Windows.Forms.HelpProvider HelpProviderSettings;
+        private System.Windows.Forms.CheckBox CheckBoxWindowsStartMinimize;
     }
 }
 

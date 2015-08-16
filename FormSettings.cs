@@ -49,43 +49,48 @@ namespace FitnessReminder
         /// 
         /// </summary>
         private const string AutoStartKey = "Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+
         /// <summary>
         /// 
         /// </summary>
-        private bool AutoStartAtLogon
+        private void AutoStartAtLogonGet(out bool AutoStart, out bool Minimize)
         {
-            get
+            try
             {
-                try
-                {
-                    var AutoStartRegistry = Registry.CurrentUser.OpenSubKey(AutoStartKey);
-                    var _AutoStartup = AutoStartRegistry.GetValue("Fitness Reminder");
-                    return (_AutoStartup != null);
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-                return false;
+                var AutoStartRegistry = Registry.CurrentUser.OpenSubKey(AutoStartKey);
+                var _AutoStartup = AutoStartRegistry.GetValue("Fitness Reminder");
+                AutoStart = Convert.ToString(_AutoStartup).Contains("\"" + Application.ExecutablePath + "\"");
+                Minimize = Convert.ToString(_AutoStartup).Contains("/auto");
             }
-            set
+            catch (Exception Ex)
             {
-                try
+                MessageBox.Show(Ex.Message);
+                AutoStart = false;
+                Minimize = false;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="AutoStart"></param>
+        /// <param name="Minimize"></param>
+        private void AutoStartAtLogonSet(bool AutoStart, bool Minimize)
+        {
+            try
+            {
+                var AutoStartRegistry = Registry.CurrentUser.OpenSubKey(AutoStartKey, true);
+                if (AutoStart)
                 {
-                    var AutoStartRegistry = Registry.CurrentUser.OpenSubKey(AutoStartKey, true);
-                    if (value)
-                    {
-                        AutoStartRegistry.SetValue("Fitness Reminder", "\"" + Application.ExecutablePath + "\" /auto", RegistryValueKind.String);
-                    }
-                    else
-                    {
-                        AutoStartRegistry.DeleteValue("Fitness Reminder", false);
-                    }
+                    AutoStartRegistry.SetValue("Fitness Reminder", "\"" + Application.ExecutablePath + "\"" + (Minimize ? " /auto" : String.Empty), RegistryValueKind.String);
                 }
-                catch (Exception Ex)
+                else
                 {
-                    MessageBox.Show(Ex.Message);
+                    AutoStartRegistry.DeleteValue("Fitness Reminder", false);
                 }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
             }
         }
 
@@ -152,7 +157,11 @@ namespace FitnessReminder
                 MediaPlayer = new System.Media.SoundPlayer(SoundFile.FullName);
             }
 
-            CheckBoxWindowsStart.Checked = AutoStartAtLogon;
+            bool WindowsStart;
+            bool WindowsStartMinimize;
+            AutoStartAtLogonGet(out WindowsStart, out WindowsStartMinimize);
+            CheckBoxWindowsStart.Checked = WindowsStart;
+            if (WindowsStart) CheckBoxWindowsStartMinimize.Checked = WindowsStartMinimize;
         }
 
         /// <summary>
@@ -437,6 +446,16 @@ namespace FitnessReminder
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        private void CheckBoxWindowsStart_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBoxWindowsStartMinimize.Enabled = CheckBoxWindowsStart.Checked;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonResetSettings_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("App must close to take effect.", "Fitness Reminder", MessageBoxButtons.OKCancel) == DialogResult.OK)
@@ -486,7 +505,7 @@ namespace FitnessReminder
                     RegSettings.SetDisplaySound(CheckBoxSound.Checked);
                     RegSettings.SetDisplaySoundFile(MediaPlayer);
 
-                    AutoStartAtLogon = CheckBoxWindowsStart.Checked;
+                    AutoStartAtLogonSet(CheckBoxWindowsStart.Checked, CheckBoxWindowsStartMinimize.Checked);
                 }
                 else
                 {
