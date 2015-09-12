@@ -182,14 +182,23 @@ namespace FitnessReminder
         /// <param name="e"></param>
         private void FormSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!CanExit)
+            if (!InitialStart)
             {
-                HideIt();
-                e.Cancel = true;
-            }
-            else
-            {
-                try { SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch; } catch { }
+                if (!CanExit)
+                {
+                    HideIt();
+                    e.Cancel = true;
+                }
+                else
+                {
+                    try
+                    {
+                        SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
+                    }
+                    catch
+                    {
+                    }
+                }
             }
         }
 
